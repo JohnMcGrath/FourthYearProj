@@ -23,6 +23,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Worker.cpp" />
   </ItemGroup>
@@ -30,6 +31,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Worker.h" />
