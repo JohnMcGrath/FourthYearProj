@@ -277,7 +277,7 @@ void Game::WorkerHandler()
 void Game::BulletHandler()
 {
 	//if the space key is held
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || (sf::Joystick::isButtonPressed(0, 5)))
 	{
 		//timer
 		if (bulletCounter < 10)
@@ -300,12 +300,11 @@ void Game::BulletHandler()
 	if (m_controllerMode == 0)//Controller::Keyboard)
 	{
 		cursorPos = (sf::Vector2f)sf::Mouse::getPosition(m_window);
-		//std::cout << "Joystick: " << sf::Joystick::getAxisPosition(0,sf::Joystick::Axis::R) << " ," << sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) << std::endl;
 	}
 
 	else if (m_controllerMode == 1)//Controller::Controller)
 	{
-		//cursorPos = sf::Vector2f(10 * sin(/*ReplaceWithAngle*/) + m_player->getPosition().x, 10 * -cos(/*ReplaceWithAngle*/) + m_player->getPosition().y);
+		cursorPos = sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R));
 	}
 
 	else if (m_controllerMode == 2)//Controller::TouchScreen)
@@ -315,9 +314,17 @@ void Game::BulletHandler()
 		cursorPos = sf::Vector2f(10 * sin(m_player->getOrientation()) + m_player->getPosition().x, 10 * -cos(m_player->getOrientation()) + m_player->getPosition().y);
 	}
 	
+
+
 	if (m_controllerMode == 0)
 	{
 		aimDir = cursorPos - sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2);
+		std::cout << "AimDir: " << aimDir.x << " ," << aimDir.y << std::endl;
+	}
+
+	if (m_controllerMode == 1)
+	{
+		aimDir = cursorPos;
 	}
 
 	else
