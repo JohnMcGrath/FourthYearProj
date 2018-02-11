@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <sstream>
 
+
 class Player;
 class Enemy;
 class Projectile;
@@ -20,6 +21,13 @@ class Worker;
 class sf::CircleShape;
 
 static const float VIEW_HEIGHT = 1080.0f;
+
+enum Controller
+{
+	Keyboard = 0,
+	Controller = 1,
+	TouchScreen = 2
+};
 
 class Game
 {
@@ -180,6 +188,8 @@ private:
 	sf::CircleShape hudEnemyMap;
 	sf::CircleShape hudWorkerMap;
 	sf::CircleShape hudBoidMap;
+
+	int m_controllerMode = 0;
 };
 
 #endif

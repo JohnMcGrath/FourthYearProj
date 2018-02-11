@@ -296,8 +296,35 @@ void Game::BulletHandler()
 	}
 	//Gets the aiming vector between the player and a point slighty, directly ahead of the player
 	playerCentre = sf::Vector2f(m_player->getPosition());
-	cursorPos = sf::Vector2f(10 * sin(m_player->getOrientation()) + m_player->getPosition().x, 10 * -cos(m_player->getOrientation()) + m_player->getPosition().y);
-	aimDir = cursorPos - playerCentre;
+
+	if (m_controllerMode == 0)//Controller::Keyboard)
+	{
+		cursorPos = (sf::Vector2f)sf::Mouse::getPosition(m_window);
+		//std::cout << "Joystick: " << sf::Joystick::getAxisPosition(0,sf::Joystick::Axis::R) << " ," << sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) << std::endl;
+	}
+
+	else if (m_controllerMode == 1)//Controller::Controller)
+	{
+		//cursorPos = sf::Vector2f(10 * sin(/*ReplaceWithAngle*/) + m_player->getPosition().x, 10 * -cos(/*ReplaceWithAngle*/) + m_player->getPosition().y);
+	}
+
+	else if (m_controllerMode == 2)//Controller::TouchScreen)
+	{
+		std::cout << "Joystick: " << m_player->getOrientation() << " ," << m_player->getOrientation() << std::endl;
+		//In radians
+		cursorPos = sf::Vector2f(10 * sin(m_player->getOrientation()) + m_player->getPosition().x, 10 * -cos(m_player->getOrientation()) + m_player->getPosition().y);
+	}
+	
+	if (m_controllerMode == 0)
+	{
+		aimDir = cursorPos - sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2);
+	}
+
+	else
+	{
+		aimDir = cursorPos - playerCentre;
+	}
+	
 	normalisedAimDir = m_player->Normalise(aimDir);
 
 	//Update each individual bullet
