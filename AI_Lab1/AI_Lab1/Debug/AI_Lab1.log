@@ -1,7 +1,7 @@
 ﻿  Player.cpp
 c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\player.cpp(27): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\player.cpp(58): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\player.cpp(63): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\player.cpp(141): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\player.cpp(76): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\player.cpp(81): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\player.cpp(159): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   AI_Lab1.vcxproj -> C:\Users\User\Desktop\4thYearProj\FourthYearProj\AI_Lab1\Debug\AI_Lab1.exe
   AI_Lab1.vcxproj -> C:\Users\User\Desktop\4thYearProj\FourthYearProj\AI_Lab1\Debug\AI_Lab1.pdb (Partial PDB)

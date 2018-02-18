@@ -36,11 +36,29 @@ float Player::orientate()
 /// <summary>
 /// Handles all keyboard keys and what they do
 /// </summary>
-void Player::HandleInput()
+void Player::HandleInput(int controlMode)
 {
 	//Boost forward
 	float x = sin(getOrientation());
 	float y = -cos(getOrientation());
+
+	if (controlMode == 1)
+	{
+		
+		tempVec.x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
+		tempVec.y = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y);
+		//std::cout << sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) << ", " << sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) << std::endl;
+		//steerPlayer(sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y)));
+		//m_position = m_position += (m_maxSpeed * Normalise(sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y))));
+		if ((tempVec.x > 5) || (tempVec.x < -5))
+		{
+			m_position = m_position += (sf::Vector2f(m_maxSpeed * (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) / 100), 0));
+		}
+		if ((tempVec.y > 5) || (tempVec.y < -5))
+		{
+			m_position = m_position += sf::Vector2f(0, m_maxSpeed * (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) / 100));
+		}
+	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
@@ -139,7 +157,7 @@ void Player::Update(sf::Vector2f centrePoint) {
 	
 	m_sprite.setPosition(m_position);
 	m_sprite.setRotation(m_orientation * (180 / 3.14));
-	HandleInput();
+	HandleInput(1);
 	m_velocity = Normalise(m_velocity);
 	setPosition(m_position + (sf::Vector2f(getVelocity().x*m_maxSpeed,getVelocity().y*m_maxSpeed)));
 }

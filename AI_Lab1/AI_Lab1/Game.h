@@ -24,9 +24,9 @@ static const float VIEW_HEIGHT = 1080.0f;
 
 enum Controller
 {
-	Keyboard = 0,
-	Controller = 1,
-	TouchScreen = 2
+	KeyboardContr = 0,
+	JoystickContr = 1,
+	TouchScreenContr = 2
 };
 
 class Game
@@ -189,7 +189,7 @@ private:
 	sf::CircleShape hudWorkerMap;
 	sf::CircleShape hudBoidMap;
 
-	int m_controllerMode = 0;
+	int m_controllerMode = Controller::JoystickContr;
 };
 
 #endif

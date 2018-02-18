@@ -13,7 +13,7 @@ public:
 	/// <summary>
 	///Handle all input
 	/// <summary>
-	void HandleInput();
+	void HandleInput(int controlMode);
 
 	/// <summary>
 	///Initialiseation Function

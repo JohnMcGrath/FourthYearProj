@@ -7,7 +7,7 @@
 ///	Constructor
 /// </summary>
 Game::Game() :
-	m_window{ sf::VideoMode{ 1600, 1000, 32 }, "Space Game" },
+	m_window{ sf::VideoMode{ 1000, 800, 32 }, "Shooter" },
 	m_exitGame{false} //when true game will exit
 {
 	centrePoint = sf::Vector2f(m_window.getSize().x, m_window.getSize().y);
@@ -297,41 +297,46 @@ void Game::BulletHandler()
 	//Gets the aiming vector between the player and a point slighty, directly ahead of the player
 	playerCentre = sf::Vector2f(m_player->getPosition());
 
-	if (m_controllerMode == 0)//Controller::Keyboard)
+	if (m_controllerMode == Controller::KeyboardContr)
 	{
-		cursorPos = (sf::Vector2f)sf::Mouse::getPosition(m_window);
+		//cursorPos = (sf::Vector2f)sf::Mouse::getPosition(m_window);
+		cursorPos = (sf::Vector2f)sf::Mouse::getPosition();
+		aimDir = cursorPos - playerCentre;//sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2);
+		std::cout << "AimDir: " << aimDir.x << " ," << aimDir.y << std::endl;
 	}
 
-	else if (m_controllerMode == 1)//Controller::Controller)
+	else if (m_controllerMode == Controller::JoystickContr)
 	{
 		cursorPos = sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R));
+		aimDir = cursorPos;
 	}
 
-	else if (m_controllerMode == 2)//Controller::TouchScreen)
+	else if (m_controllerMode == Controller::TouchScreenContr)
 	{
 		std::cout << "Joystick: " << m_player->getOrientation() << " ," << m_player->getOrientation() << std::endl;
 		//In radians
 		cursorPos = sf::Vector2f(10 * sin(m_player->getOrientation()) + m_player->getPosition().x, 10 * -cos(m_player->getOrientation()) + m_player->getPosition().y);
+		aimDir = cursorPos - playerCentre;
 	}
 	
 
-
+	/*
 	if (m_controllerMode == 0)
 	{
-		aimDir = cursorPos - sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2);
-		std::cout << "AimDir: " << aimDir.x << " ," << aimDir.y << std::endl;
+		
 	}
 
 	if (m_controllerMode == 1)
 	{
-		aimDir = cursorPos;
+		
 	}
 
 	else
 	{
 		aimDir = cursorPos - playerCentre;
 	}
-	
+	*/
+
 	normalisedAimDir = m_player->Normalise(aimDir);
 
 	//Update each individual bullet
