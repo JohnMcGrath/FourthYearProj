@@ -2,6 +2,13 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+enum Controller
+{
+	KeyboardContr = 0,
+	JoystickContr = 1,
+	TouchScreenContr = 2
+};
+
 class Player
 {
 public:
@@ -23,7 +30,7 @@ public:
 	/// <summary>
 	///Update loop
 	/// <summary>
-	void Update(sf::Vector2f centrePoint);
+	void Update(sf::Vector2f centrePoint, int controlMode);
 
 	/// <summary>
 	///Getters
@@ -63,6 +70,8 @@ public:
 	/// <summary>
 	float Magnitude(sf::Vector2f v);
 	sf::Vector2f Normalise(sf::Vector2f v);
+	float DotProduct(sf::Vector2f v1, sf::Vector2f v2);
+	float AngleBetweenVectors(sf::Vector2f v1, sf::Vector2f v2);
 
 	/// <summary>
 	///Adjust's player's velocity by orientation
@@ -120,4 +129,9 @@ private:
 	///Whether is currently invinsible
 	/// <summary>
 	bool invincile = false;
+
+	bool m_touchControlPressOnceA = false;
+	bool m_touchControlPressOnceD = false;
+
+	bool m_touchControlIsFiring = false;
 };

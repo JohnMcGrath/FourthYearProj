@@ -1,8 +1,6 @@
 #include "Game.h"
 #include <iostream>
 
-
-
 /// <summary>
 ///	Constructor
 /// </summary>
@@ -271,13 +269,53 @@ void Game::WorkerHandler()
 	}
 }
 
+void Game::CheckIfFiring()
+{
+	if (m_controllerMode == Controller::KeyboardContr)
+	{
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			m_isFiring = true;
+		}
+		else
+		{
+			m_isFiring = false;
+		}
+	}
+	else if (m_controllerMode == Controller::JoystickContr)
+	{
+		if (sf::Joystick::isButtonPressed(0, 5))
+		{
+			m_isFiring = true;
+		}
+		else
+		{
+			m_isFiring = false;
+		}
+	}
+	else //Controller::TouchScreenContr
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !m_spacePressedOnce)
+		{
+			m_spacePressedOnce = true;
+			m_isFiring = !m_isFiring;
+		}
+		else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_spacePressedOnce)
+		{
+			m_spacePressedOnce = false;
+		}
+	}
+
+}
+
 /// <summary>
 /// Handles all events and collisions relating to the player's bullets
 /// </summary>
 void Game::BulletHandler()
 {
-	//if the space key is held
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || (sf::Joystick::isButtonPressed(0, 5)))
+	CheckIfFiring();
+
+	if (m_isFiring)
 	{
 		//timer
 		if (bulletCounter < 10)
@@ -299,10 +337,8 @@ void Game::BulletHandler()
 
 	if (m_controllerMode == Controller::KeyboardContr)
 	{
-		//cursorPos = (sf::Vector2f)sf::Mouse::getPosition(m_window);
-		cursorPos = (sf::Vector2f)sf::Mouse::getPosition();
-		aimDir = cursorPos - playerCentre;//sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2);
-		std::cout << "AimDir: " << aimDir.x << " ," << aimDir.y << std::endl;
+		cursorPos = (sf::Vector2f)sf::Mouse::getPosition(m_window);
+		aimDir = cursorPos - sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2);
 	}
 
 	else if (m_controllerMode == Controller::JoystickContr)
@@ -313,29 +349,9 @@ void Game::BulletHandler()
 
 	else if (m_controllerMode == Controller::TouchScreenContr)
 	{
-		std::cout << "Joystick: " << m_player->getOrientation() << " ," << m_player->getOrientation() << std::endl;
-		//In radians
 		cursorPos = sf::Vector2f(10 * sin(m_player->getOrientation()) + m_player->getPosition().x, 10 * -cos(m_player->getOrientation()) + m_player->getPosition().y);
 		aimDir = cursorPos - playerCentre;
 	}
-	
-
-	/*
-	if (m_controllerMode == 0)
-	{
-		
-	}
-
-	if (m_controllerMode == 1)
-	{
-		
-	}
-
-	else
-	{
-		aimDir = cursorPos - playerCentre;
-	}
-	*/
 
 	normalisedAimDir = m_player->Normalise(aimDir);
 
@@ -351,6 +367,7 @@ void Game::BulletHandler()
 			break;
 		}
 
+		//if the bullet wasnt deleted
 		else
 		{
 			//Gets the bullets bounding box
@@ -392,21 +409,6 @@ void Game::BulletHandler()
 					break;
 				}
 			}
-
-			/*for (size_t k = 0; k < predators.size(); k++)
-			{
-				//Gets the enemy boid's bounding box
-				enemyBound = predators[k].getSprite().getGlobalBounds();
-				enemyBoundShap.setSize(sf::Vector2f(enemyBound.width, enemyBound.height));
-				enemyBoundShap.setPosition(sf::Vector2f(enemyBound.left, enemyBound.top));
-
-				if (bulletBoundShape.getGlobalBounds().intersects(enemyBoundShap.getGlobalBounds()))
-				{
-					bullets.erase(bullets.begin() + i);
-					predators.erase(predators.begin() + k);
-					break;
-				}
-			}*/
 		}
 	}
 }
@@ -477,7 +479,7 @@ void Game::update(sf::Time t_deltaTime)
 	
 
 	//View
-	m_player->Update(centrePoint);
+	m_player->Update(centrePoint,m_controllerMode);
 
 	//Player
 	playerView.setCenter(m_player->getPosition());

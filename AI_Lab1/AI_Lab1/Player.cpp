@@ -42,14 +42,67 @@ void Player::HandleInput(int controlMode)
 	float x = sin(getOrientation());
 	float y = -cos(getOrientation());
 
+	if (controlMode == 0)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			{
+				m_position = m_position + sf::Vector2f(0, -m_maxSpeed / 1.5);
+			}
+			else
+			{
+				m_position = m_position + sf::Vector2f(0, -m_maxSpeed);
+			}
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			{
+				m_position = m_position + sf::Vector2f(0, m_maxSpeed / 1.5);
+			}
+			else
+			{
+				m_position = m_position + sf::Vector2f(0, m_maxSpeed);
+			}
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			{
+				m_position = m_position + sf::Vector2f(-m_maxSpeed / 1.5, 0);
+			}
+			else
+			{
+				m_position = m_position + sf::Vector2f(-m_maxSpeed, 0);
+			}
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			{
+				m_position = m_position + sf::Vector2f(m_maxSpeed / 1.5, 0);
+			}
+			else
+			{
+				m_position = m_position + sf::Vector2f(m_maxSpeed, 0);
+			}
+		}
+
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S)
+			&& !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			setVelocity(sf::Vector2f(0, 0));
+		}
+	}
+
 	if (controlMode == 1)
 	{
-		
 		tempVec.x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
 		tempVec.y = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y);
-		//std::cout << sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) << ", " << sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) << std::endl;
-		//steerPlayer(sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y)));
-		//m_position = m_position += (m_maxSpeed * Normalise(sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y))));
+
 		if ((tempVec.x > 5) || (tempVec.x < -5))
 		{
 			m_position = m_position += (sf::Vector2f(m_maxSpeed * (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) / 100), 0));
@@ -60,31 +113,56 @@ void Player::HandleInput(int controlMode)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if (controlMode == 2)
 	{
-		steerPlayer(sf::Vector2f(x, y));
-	}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			steerPlayer(sf::Vector2f(x, y));
+		}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		steerPlayer(sf::Vector2f(-x, -y));
-	}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			steerPlayer(sf::Vector2f(-x, -y));
+		}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		//Rotate
-		setOrientation(getOrientation() - (4 / (180 / 3.142)));
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		//Rotate
-		setOrientation(getOrientation() + (4 / (180 / 3.142)));
-	}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !m_touchControlPressOnceA)
+		{
+			m_touchControlPressOnceA = true;
+			setOrientation(getOrientation() - (45 / (180 / 3.142)));
+		}
+		else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) && m_touchControlPressOnceA == true)
+		{
+			m_touchControlPressOnceA = false;
+		}
 
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		setVelocity(sf::Vector2f(0, 0));
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) == true && m_touchControlPressOnceD == false)
+		{
+			std::cout << getOrientation() << std::endl;
+			m_touchControlPressOnceD = true;
+			setOrientation(getOrientation() + (45 / (180 / 3.142)));
+		}
+
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) == false && m_touchControlPressOnceD == true)
+		{
+			m_touchControlPressOnceD = false;
+		}
+
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			setVelocity(sf::Vector2f(0, 0));
+		}
 	}
+	
+}
+
+float Player::DotProduct(sf::Vector2f v1, sf::Vector2f v2)
+{
+	return ((v1.x * v2.x) + (v1.y * v2.y));
+}
+
+float Player::AngleBetweenVectors(sf::Vector2f v1, sf::Vector2f v2)
+{
+	return ((DotProduct(v1, v2)) / (Magnitude(v1)*Magnitude(v2)));
 }
 
 /// <summary>
@@ -153,11 +231,11 @@ void Player::WrapAround(sf::Vector2f screenSize)
 /// <summary>
 ///Update loop for the player
 /// <summary>
-void Player::Update(sf::Vector2f centrePoint) {
+void Player::Update(sf::Vector2f centrePoint, int controlMode) {
 	
 	m_sprite.setPosition(m_position);
 	m_sprite.setRotation(m_orientation * (180 / 3.14));
-	HandleInput(1);
+	HandleInput(controlMode);
 	m_velocity = Normalise(m_velocity);
 	setPosition(m_position + (sf::Vector2f(getVelocity().x*m_maxSpeed,getVelocity().y*m_maxSpeed)));
 }

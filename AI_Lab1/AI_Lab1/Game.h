@@ -22,12 +22,7 @@ class sf::CircleShape;
 
 static const float VIEW_HEIGHT = 1080.0f;
 
-enum Controller
-{
-	KeyboardContr = 0,
-	JoystickContr = 1,
-	TouchScreenContr = 2
-};
+
 
 class Game
 {
@@ -91,6 +86,7 @@ private:
 	void WorkerHandler();
 	void BulletHandler();
 	void HUDHandler();
+	void CheckIfFiring();
 
 	/// <summary>
 	///Checks for the nearest worker object, causes frame stutter upon starting app if used
@@ -189,7 +185,13 @@ private:
 	sf::CircleShape hudWorkerMap;
 	sf::CircleShape hudBoidMap;
 
-	int m_controllerMode = Controller::JoystickContr;
+	
+
+	bool m_isFiring = false;
+
+	bool m_spacePressedOnce = false;
+
+	int m_controllerMode = Controller::KeyboardContr;
 };
 
 #endif
