@@ -338,6 +338,8 @@ void Game::BulletHandler()
 	if (m_controllerMode == Controller::KeyboardContr)
 	{
 		cursorPos = (sf::Vector2f)sf::Mouse::getPosition(m_window);
+		//cursorPos = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
+
 		aimDir = cursorPos - sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2);
 	}
 
