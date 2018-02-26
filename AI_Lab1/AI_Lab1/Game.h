@@ -11,7 +11,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <sstream>
-
+#include "MapLoader.h"
 
 class Player;
 class Enemy;
@@ -192,6 +192,8 @@ private:
 	bool m_spacePressedOnce = false;
 
 	int m_controllerMode = Controller::KeyboardContr;
+
+	MapLoader * m_mapLoader;
 };
 
 #endif

@@ -24,6 +24,8 @@ Game::~Game()
 /// </summary>
 void Game::run()
 {
+	m_mapLoader = new MapLoader();
+
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	sf::Time timePerFrame = sf::seconds(1.f / 60.f); // 60 fps
@@ -506,6 +508,7 @@ void Game::render()
 
 	m_window.setView(playerView);
 	m_window.draw(m_logoSprite);
+	m_mapLoader->Draw(&m_window);
 
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
