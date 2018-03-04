@@ -50,7 +50,7 @@ void MapLoader::Init()
 				m_tempSprite.setPosition(sf::Vector2f(128 * j, 128 * i));
 				m_tempSprite.setTexture(m_wallTexture);
 				m_tempSprite.setScale(sf::Vector2f(0.5f,0.5f));
-				m_sprites.push_back(m_tempSprite);
+				m_wallSprites.push_back(m_tempSprite);
 			}
 			else
 			{
@@ -59,7 +59,7 @@ void MapLoader::Init()
 				m_tempSprite.setPosition(sf::Vector2f(128 * j, 128 * i));
 				m_tempSprite.setTexture(m_floorTexture);
 				m_tempSprite.setScale(sf::Vector2f(0.5f, 0.5f));
-				m_sprites.push_back(m_tempSprite);
+				m_floorSprites.push_back(m_tempSprite);
 			}
 			
 		}
@@ -81,8 +81,12 @@ void MapLoader::Draw(sf::RenderWindow* window)
 	//	m_floorSprite.setPosition(sf::Vector2f(m_floorPos.at(j).left, m_floorPos.at(j).top));
 	//	window->draw(m_floorSprite);
 	//}
-	for (int i = 0; i < m_sprites.size(); i++)
+	for (int i = 0; i < m_wallSprites.size(); i++)
 	{
-		window->draw(m_sprites[i]);
+		window->draw(m_wallSprites[i]);
+	}
+	for (int i = 0; i < m_floorSprites.size(); i++)
+	{
+		window->draw(m_floorSprites[i]);
 	}
 }

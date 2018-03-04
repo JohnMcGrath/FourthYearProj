@@ -388,6 +388,17 @@ void Game::BulletHandler()
 			bulletBoundShape.setSize(sf::Vector2f(bulletBound.width, bulletBound.height));
 			bulletBoundShape.setPosition(sf::Vector2f(bulletBound.left, bulletBound.top));
 
+			//CAUSES LAG IF BULLET GOES OFF SCREEN
+			//for (size_t h = 0; h < m_mapLoader->getWallSprites().size(); h++)
+			//{
+			//	//If bullet hits wall
+			//	if (bulletBoundShape.getGlobalBounds().intersects(m_mapLoader->getWallSprites().at(h).getGlobalBounds()))
+			//	{
+			//		bullets.erase(bullets.begin() + i);
+			//		break;
+			//	}
+			//}
+
 			for (size_t k = 0; k < enemies.size(); k++)
 			{
 				//Gets the enemy's bounding box
@@ -529,15 +540,8 @@ void Game::render()
 
 	m_window.setView(playerView);
 
-	std::vector<sf::Sprite> tempSp = m_mapLoader->getSprites();
-
-	for (int i = 0; i < tempSp.size(); i++)
-	{
-		m_window.draw(tempSp.at(i));
-	}
+	m_mapLoader->Draw(&m_window);
 	
-	//m_mapLoader->Draw(&m_window);
-
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
 		for (size_t j = 0; j < enemies[i].getBullets().size(); j++)

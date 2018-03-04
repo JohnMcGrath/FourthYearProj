@@ -196,7 +196,7 @@ private:
 
 	bool m_spacePressedOnce = false;
 
-	int m_controllerMode = Controller::JoystickContr;
+	int m_controllerMode = Controller::KeyboardContr;
 	int m_gameState = GameState::Gameplaying;
 
 	MapLoader * m_mapLoader;

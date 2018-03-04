@@ -10,6 +10,7 @@ public:
 	void Render();
 	void Draw(sf::RenderWindow* window);
 	std::vector<sf::Sprite> getSprites() { return m_sprites; }
+	std::vector<sf::Sprite> getWallSprites() { return m_wallSprites; }
 
 private:
 	 std::vector<int> m_row0 = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
@@ -37,4 +38,6 @@ private:
 	std::vector<sf::FloatRect> m_wallPos;
 	std::vector<sf::FloatRect> m_floorPos;
 	std::vector<sf::Sprite> m_sprites;
+	std::vector<sf::Sprite> m_wallSprites;
+	std::vector<sf::Sprite> m_floorSprites;
 };
