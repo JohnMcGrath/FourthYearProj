@@ -52,10 +52,10 @@ void MapLoader::Init()
 
 void MapLoader::Draw(sf::RenderWindow* window)
 {
-	std::cout << "Drawing Walls" << std::endl;
+	//std::cout << "Drawing Walls" << std::endl;
 	for (int i = 0; i << m_wallPos.size(); i++)
 	{
-		std::cout << "Wall" << std::endl;
+		//std::cout << "Wall" << std::endl;
 		m_wallSprite.setPosition(sf::Vector2f(m_wallPos.at(i).left, m_wallPos.at(i).top));
 		window->draw(m_wallSprite);
 	}

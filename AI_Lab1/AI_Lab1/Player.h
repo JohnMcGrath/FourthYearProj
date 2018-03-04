@@ -76,7 +76,7 @@ public:
 	/// <summary>
 	///Adjust's player's velocity by orientation
 	/// <summary>
-	float orientate();
+	void orientate(sf::Vector2f target, int controlMode);
 
 	/// <summary>
 	///Timer used to represent how long a player is invincible after taking damage

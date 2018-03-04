@@ -17,19 +17,11 @@ void Player::steerPlayer(sf::Vector2f t)
 /// <summary>
 /// Adjusts the player's velocity accord to their orientation
 /// </summary>
-float Player::orientate()
+void Player::orientate(sf::Vector2f target, int controlMode)
 {
-	std::cout << "Win";
-	float l = Magnitude(m_velocity);
-	if (l > 0)
+	if (controlMode == 0 || controlMode == 1)
 	{
-		std::cout << "Win";
-		return ((atan2(m_velocity.x, -m_velocity.y)) * 180 / 3.142);
-	}
-	else
-	{
-		std::cout << "Lose";
-		return m_orientation;
+		m_orientation = (atan2(target.x, -target.y)); //As radians
 	}
 }
 
@@ -232,7 +224,6 @@ void Player::WrapAround(sf::Vector2f screenSize)
 ///Update loop for the player
 /// <summary>
 void Player::Update(sf::Vector2f centrePoint, int controlMode) {
-	
 	m_sprite.setPosition(m_position);
 	m_sprite.setRotation(m_orientation * (180 / 3.14));
 	HandleInput(controlMode);

@@ -136,39 +136,6 @@ void Game::EnemyHandler()
 		e1.setPosition(sf::Vector2f(nests[tempNestPos].getPosition().x, nests[tempNestPos].getPosition().y));
 		enemies.push_back(e1);
 	}
-	/*
-	for (size_t i = 0; i < predators.size(); i++)
-	{
-		if (predators[i].getPosInSwarm() == 0)
-		{
-			predators[i].Update(m_player->getPosition(), centrePoint, 3);
-		}
-		
-		else
-		{
-			//Vector to represent the midpoint between the player and the member of the predator ahead of them
-			sf::Vector2f temp = sf::Vector2f(((m_player->getPosition().x + predators[i -1].getPosition().x) / 2), ((m_player->getPosition().y + predators[i- 1].getPosition().y) / 2));
-			predators[i].Update(temp, centrePoint, 3);
-		}
-
-			enemyBound = predators[i].getSprite().getGlobalBounds();
-			enemyBoundShap.setSize(sf::Vector2f(enemyBound.width, enemyBound.height));
-			enemyBoundShap.setPosition(sf::Vector2f(enemyBound.left, enemyBound.top));
-
-			for (size_t k = 0; k < bullets.size(); k++)
-			{
-				//Gets the bullets bounding box
-				bulletBound = bullets[k].m_shape.getGlobalBounds();
-				bulletBoundShape.setSize(sf::Vector2f(bulletBound.width, bulletBound.height));
-				bulletBoundShape.setPosition(sf::Vector2f(bulletBound.left, bulletBound.top));
-
-				if (bulletBoundShape.getGlobalBounds().intersects(enemyBoundShap.getGlobalBounds()))
-				{
-					//Hit Predator
-				}
-			}
-			
-	} */
 
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
@@ -484,10 +451,12 @@ void Game::update(sf::Time t_deltaTime)
 
 	//View
 	m_player->Update(centrePoint,m_controllerMode);
+	m_player->orientate(aimDir, m_controllerMode);
+	//m_player->orientate(cursorPos);
 
 	//Player
 	playerView.setCenter(m_player->getPosition());
-
+	
 	HUDHandler();
 	BulletHandler();
 	EnemyHandler();
@@ -533,13 +502,6 @@ void Game::render()
 	{
 		m_window.draw(workersEns[i].getSprite());
 	}
-
-	/*
-	for (size_t i = 0; i < predators.size(); i++)
-	{
-		m_window.draw(predators[i].getSprite());
-	}
-	*/
 
 	for (size_t i = 0; i < bullets.size(); i++)
 	{
