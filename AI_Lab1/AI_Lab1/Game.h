@@ -191,7 +191,7 @@ private:
 
 	bool m_spacePressedOnce = false;
 
-	int m_controllerMode = Controller::KeyboardContr;
+	int m_controllerMode = Controller::JoystickContr;
 
 	MapLoader * m_mapLoader;
 };

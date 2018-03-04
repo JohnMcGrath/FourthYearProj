@@ -9,7 +9,7 @@ public:
 	void Init();
 	void Render();
 	void Draw(sf::RenderWindow* window);
-
+	std::vector<sf::Sprite> getSprites() { return m_sprites; }
 
 private:
 	std::vector<int> m_row0 = { 1,1,1,1,1,1,1,1,1,1 };
@@ -25,10 +25,12 @@ private:
 
 	std::vector<std::vector<int>> m_rows;
 	sf::Sprite m_wallSprite;
+	sf::Sprite m_tempSprite;
 	sf::Texture m_wallTexture;
 	sf::Sprite m_floorSprite;
 	sf::Texture m_floorTexture;
 	std::vector<sf::FloatRect> m_wallPos;
 	std::vector<sf::FloatRect> m_floorPos;
+	std::vector<sf::Sprite> m_sprites;
 	
 };

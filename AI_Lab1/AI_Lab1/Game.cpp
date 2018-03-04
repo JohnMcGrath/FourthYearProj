@@ -456,7 +456,8 @@ void Game::update(sf::Time t_deltaTime)
 
 	//Player
 	playerView.setCenter(m_player->getPosition());
-	
+	//m_mapLoader->Draw(&m_window);
+
 	HUDHandler();
 	BulletHandler();
 	EnemyHandler();
@@ -476,8 +477,16 @@ void Game::render()
 	m_window.clear(sf::Color::Black);
 
 	m_window.setView(playerView);
-	m_window.draw(m_logoSprite);
-	m_mapLoader->Draw(&m_window);
+	//m_window.draw(m_logoSprite);
+
+	std::vector<sf::Sprite> tempSp = m_mapLoader->getSprites();
+
+	for (int i = 0; i < tempSp.size(); i++)
+	{
+		m_window.draw(tempSp.at(i));
+	}
+	
+	//m_mapLoader->Draw(&m_window);
 
 	for (size_t i = 0; i < enemies.size(); i++)
 	{

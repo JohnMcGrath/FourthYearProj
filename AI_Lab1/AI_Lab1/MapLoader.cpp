@@ -19,24 +19,6 @@ MapLoader::MapLoader()
 
 void MapLoader::Init()
 {
-	for (int i = 0; i < m_row0.size(); i++)
-	{
-		std::cout << "" << std::endl;
-		for (int j = 0; j < m_rows.size(); j++)
-		{
-			if (m_rows.at(i).at(j) == 1)
-			{
-				std::cout << "||";
-				m_wallPos.push_back(sf::FloatRect(256 * i, 256 * j, 256, 256));
-			}
-			else
-			{
-				std::cout << "  ";
-				m_floorPos.push_back(sf::FloatRect(256 * i, 256 * j, 256, 256));
-			}
-			
-		}
-	}
 	if (!m_wallTexture.loadFromFile("ASSETS\\IMAGES\\wallSprite.png"))
 	{
 		std::cout << "Error loading wallTexture" << std::endl;
@@ -48,20 +30,52 @@ void MapLoader::Init()
 		std::cout << "Error loading floorTexture" << std::endl;
 	}
 	m_floorSprite.setTexture(m_floorTexture);
+
+	for (int i = 0; i < m_row0.size(); i++)
+	{
+		std::cout << "" << std::endl;
+		for (int j = 0; j < m_rows.size(); j++)
+		{
+			if (m_rows.at(i).at(j) == 1)
+			{
+				std::cout << "||";
+				m_tempSprite.setPosition(sf::Vector2f(128 * i, 128 * j));
+				m_tempSprite.setTexture(m_wallTexture);
+				m_tempSprite.setScale(sf::Vector2f(0.5f,0.5f));
+				m_sprites.push_back(m_tempSprite);
+				//m_wallPos.push_back(sf::FloatRect(256 * i, 256 * j, 256, 256));
+			}
+			else
+			{
+				std::cout << "  ";
+				m_tempSprite.setPosition(sf::Vector2f(128 * i, 128 * j));
+				m_tempSprite.setTexture(m_floorTexture);
+				m_tempSprite.setScale(sf::Vector2f(0.5f, 0.5f));
+				m_sprites.push_back(m_tempSprite);
+				//m_floorPos.push_back(sf::FloatRect(256 * i, 256 * j, 256, 256));
+			}
+			
+		}
+	}
+	
 }
 
 void MapLoader::Draw(sf::RenderWindow* window)
 {
 	//std::cout << "Drawing Walls" << std::endl;
-	for (int i = 0; i << m_wallPos.size(); i++)
+	//for (int i = 0; i << m_wallPos.size(); i++)
+	//{
+	//	//std::cout << "Wall" << std::endl;
+	//	m_wallSprite.setPosition(sf::Vector2f(m_wallPos.at(i).left, m_wallPos.at(i).top));
+	//	window->draw(m_wallSprite);
+	//}
+	//for (int j = 0; j << m_floorPos.size(); j++)
+	//{
+	//	m_floorSprite.setPosition(sf::Vector2f(m_floorPos.at(j).left, m_floorPos.at(j).top));
+	//	window->draw(m_floorSprite);
+	//}
+	for (int i = 0; i < m_sprites.size(); i++)
 	{
-		//std::cout << "Wall" << std::endl;
-		m_wallSprite.setPosition(sf::Vector2f(m_wallPos.at(i).left, m_wallPos.at(i).top));
-		window->draw(m_wallSprite);
-	}
-	for (int j = 0; j << m_floorPos.size(); j++)
-	{
-		m_floorSprite.setPosition(sf::Vector2f(m_floorPos.at(j).left, m_floorPos.at(j).top));
-		window->draw(m_floorSprite);
+		window->draw(m_sprites[i]);
 	}
 }
