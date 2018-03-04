@@ -12,16 +12,21 @@ public:
 	std::vector<sf::Sprite> getSprites() { return m_sprites; }
 
 private:
-	std::vector<int> m_row0 = { 1,1,1,1,1,1,1,1,1,1 };
-	std::vector<int> m_row1 = { 1,1,0,0,0,0,0,0,0,1 };
-	std::vector<int> m_row2 = { 1,0,1,0,0,0,0,0,0,1 };
-	std::vector<int> m_row3 = { 1,0,0,1,0,0,0,0,0,1 };
-	std::vector<int> m_row4 = { 1,0,0,0,1,0,0,0,0,1 };
-	std::vector<int> m_row5 = { 1,0,0,0,0,1,0,0,0,1 };
-	std::vector<int> m_row6 = { 1,0,0,0,0,0,1,0,0,1 };
-	std::vector<int> m_row7 = { 1,0,0,0,0,0,0,1,0,1 };
-	std::vector<int> m_row8 = { 1,0,0,0,0,0,0,0,1,1 };
-	std::vector<int> m_row9 = { 1,1,1,1,1,1,1,1,1,1 };
+	 std::vector<int> m_row0 = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
+	 std::vector<int> m_row1 = { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 };
+	 std::vector<int> m_row2 = { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 };
+	 std::vector<int> m_row3 = { 1,0,0,1,1,1,1,1,1,1,1,1,0,0,1 };
+	 std::vector<int> m_row4 = { 1,0,0,1,0,0,0,0,0,0,0,0,0,0,1 };
+	 std::vector<int> m_row5 = { 1,0,0,1,0,0,0,0,0,0,0,0,0,0,1 };
+	 std::vector<int> m_row6 = { 1,0,0,1,0,0,0,0,1,0,0,1,0,0,1 };
+	 std::vector<int> m_row7 = { 1,0,0,1,0,0,0,0,1,0,0,1,0,0,1 };
+	 std::vector<int> m_row8 = { 1,0,0,1,0,0,0,0,1,0,1,1,0,0,1 };
+	 std::vector<int> m_row9 = { 1,0,0,0,0,0,0,0,1,0,0,1,0,0,1 };
+	std::vector<int> m_row10 = { 1,0,0,0,0,0,0,0,1,0,0,1,0,0,1 };
+	std::vector<int> m_row11 = { 1,0,0,1,1,1,1,1,1,1,1,1,1,1,1 };
+	std::vector<int> m_row12 = { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 };
+	std::vector<int> m_row13 = { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,1 };
+	std::vector<int> m_row14 = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
 
 	std::vector<std::vector<int>> m_rows;
 	sf::Sprite m_wallSprite;
@@ -32,5 +37,4 @@ private:
 	std::vector<sf::FloatRect> m_wallPos;
 	std::vector<sf::FloatRect> m_floorPos;
 	std::vector<sf::Sprite> m_sprites;
-	
 };

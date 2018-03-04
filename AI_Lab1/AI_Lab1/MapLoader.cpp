@@ -13,6 +13,11 @@ MapLoader::MapLoader()
 	m_rows.push_back(m_row7);
 	m_rows.push_back(m_row8);
 	m_rows.push_back(m_row9);
+	m_rows.push_back(m_row10);
+	m_rows.push_back(m_row11);
+	m_rows.push_back(m_row12);
+	m_rows.push_back(m_row13);
+	m_rows.push_back(m_row14);
 
 	Init();
 }
@@ -31,28 +36,30 @@ void MapLoader::Init()
 	}
 	m_floorSprite.setTexture(m_floorTexture);
 
+	//Width
 	for (int i = 0; i < m_row0.size(); i++)
 	{
 		std::cout << "" << std::endl;
+		//Height
 		for (int j = 0; j < m_rows.size(); j++)
 		{
 			if (m_rows.at(i).at(j) == 1)
 			{
+				//Draw a wall
 				std::cout << "||";
-				m_tempSprite.setPosition(sf::Vector2f(128 * i, 128 * j));
+				m_tempSprite.setPosition(sf::Vector2f(128 * j, 128 * i));
 				m_tempSprite.setTexture(m_wallTexture);
 				m_tempSprite.setScale(sf::Vector2f(0.5f,0.5f));
 				m_sprites.push_back(m_tempSprite);
-				//m_wallPos.push_back(sf::FloatRect(256 * i, 256 * j, 256, 256));
 			}
 			else
 			{
+				//Draw the floor
 				std::cout << "  ";
-				m_tempSprite.setPosition(sf::Vector2f(128 * i, 128 * j));
+				m_tempSprite.setPosition(sf::Vector2f(128 * j, 128 * i));
 				m_tempSprite.setTexture(m_floorTexture);
 				m_tempSprite.setScale(sf::Vector2f(0.5f, 0.5f));
 				m_sprites.push_back(m_tempSprite);
-				//m_floorPos.push_back(sf::FloatRect(256 * i, 256 * j, 256, 256));
 			}
 			
 		}

@@ -87,6 +87,8 @@ private:
 	void BulletHandler();
 	void HUDHandler();
 	void CheckIfFiring();
+	void RestartGame();
+	void ChangeController();
 
 	/// <summary>
 	///Checks for the nearest worker object, causes frame stutter upon starting app if used
@@ -174,6 +176,9 @@ private:
 	sf::Text m_healthText;
 	sf::Text m_healthPreText;
 
+	sf::Texture m_deathScreenTexture;
+	sf::Sprite m_deathScreenSprite;
+
 	int nestCounter = 0;
 
 	/// <summary>
@@ -192,6 +197,7 @@ private:
 	bool m_spacePressedOnce = false;
 
 	int m_controllerMode = Controller::JoystickContr;
+	int m_gameState = GameState::Gameplaying;
 
 	MapLoader * m_mapLoader;
 };

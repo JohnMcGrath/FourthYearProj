@@ -9,6 +9,13 @@ enum Controller
 	TouchScreenContr = 2
 };
 
+enum GameState
+{
+	Gameplaying = 0,
+	DeathScreen = 1,
+	WinScreen =2
+};
+
 class Player
 {
 public:
@@ -51,7 +58,8 @@ public:
 	void setOrientation(float newOrientation) { m_orientation = newOrientation; }
 	void setTexture(sf::Texture newTexture) { m_texture = newTexture; }
 	void setSprite(sf::Sprite newSprite) { m_sprite = newSprite; }
-	void setHealth(int h) { m_health -= h; }
+	void reduceHealth(int h) { m_health -= h; }
+	void setHeatlth(int h) { m_health = h; }
 	void setInvincible(bool tf) { invincile = tf; }
 
 	/// <summary>

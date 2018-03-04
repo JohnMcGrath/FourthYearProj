@@ -87,7 +87,7 @@ private:
 	sf::Vector2f m_velocity;
 	sf::Vector2f m_position = sf::Vector2f(500, 500);
 	float m_orientation;
-	float m_maxSpeed = 2.5f;
+	float m_maxSpeed = 2.0f;
 
 	/// <summary>
 	/// Textures and Sprites

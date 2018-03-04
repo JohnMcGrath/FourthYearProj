@@ -75,6 +75,20 @@ void Game::ResizeView(const sf::RenderWindow& window, sf::View view)
 	playerView.setSize(sf::Vector2f(VIEW_HEIGHT * ratio, VIEW_HEIGHT*ratio));
 }
 
+void Game::RestartGame()
+{
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		enemies.erase(enemies.begin() + i);
+	}
+	
+	for (int i = 0; i < boids.size(); i++)
+	{
+		boids.erase(boids.begin() + i);
+	}
+	m_player->setHeatlth(100);
+}
+
 /// <summary>
 /// Handles if the app is closed or resized.
 /// </summary>
@@ -161,7 +175,12 @@ void Game::EnemyHandler()
 					//Reduce Health by 10
 					m_player->setInvincible(true);
 					m_player->invinTimer = 0;
-					m_player->setHealth(10);
+					m_player->reduceHealth(10);
+					if (m_player->getHealth() <= 0)
+					{
+						m_gameState = GameState::DeathScreen;
+						RestartGame();
+					}
 				}
 			}
 		}
@@ -232,9 +251,32 @@ void Game::WorkerHandler()
 				//Reduce Health by 10
 				m_player->setInvincible(true);
 				m_player->invinTimer = 0;
-				m_player->setHealth(10);
+				m_player->reduceHealth(10);
+
+				if (m_player->getHealth() <= 0)
+				{
+					m_gameState = GameState::DeathScreen;
+					RestartGame();
+				}
 			}
 		}
+	}
+}
+
+void Game::ChangeController()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+	{
+		m_controllerMode = Controller::KeyboardContr;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+	{
+		m_controllerMode = Controller::JoystickContr;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
+	{
+		m_player->setOrientation(0);
+		m_controllerMode = Controller::TouchScreenContr;
 	}
 }
 
@@ -441,27 +483,36 @@ void Game::HUDHandler()
 /// <param name="t_deltaTime">time interval per frame</param>
 void Game::update(sf::Time t_deltaTime)
 {
-	if (boids.size() < 2)
+	if (m_gameState == GameState::Gameplaying)
 	{
-		e3.setPosition(sf::Vector2f(playerView.getSize().x - (rand()%500),playerView.getSize().y-(rand() % 500)));
-		boids.push_back(e3);
+		if (boids.size() < 2)
+		{
+			e3.setPosition(sf::Vector2f(playerView.getSize().x - (rand() % 500), playerView.getSize().y - (rand() % 500)));
+			boids.push_back(e3);
+		}
+
+		//Player
+		m_player->Update(centrePoint, m_controllerMode);
+		m_player->orientate(aimDir, m_controllerMode);
+
+		//View
+		playerView.setCenter(m_player->getPosition());
+
+		HUDHandler();
+		BulletHandler();
+		EnemyHandler();
+		WorkerHandler();
+		ChangeController();
 	}
-
 	
-
-	//View
-	m_player->Update(centrePoint,m_controllerMode);
-	m_player->orientate(aimDir, m_controllerMode);
-	//m_player->orientate(cursorPos);
-
-	//Player
-	playerView.setCenter(m_player->getPosition());
-	//m_mapLoader->Draw(&m_window);
-
-	HUDHandler();
-	BulletHandler();
-	EnemyHandler();
-	WorkerHandler();
+	else if (m_gameState == GameState::DeathScreen)
+	{
+		std::cout << "You Died" << std::endl;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		{
+			m_gameState = GameState::Gameplaying;
+		}
+	}
 	
 	if (m_exitGame)
 	{
@@ -477,7 +528,6 @@ void Game::render()
 	m_window.clear(sf::Color::Black);
 
 	m_window.setView(playerView);
-	//m_window.draw(m_logoSprite);
 
 	std::vector<sf::Sprite> tempSp = m_mapLoader->getSprites();
 
@@ -518,6 +568,8 @@ void Game::render()
 	}
 
 	m_window.draw(m_player->getSprite());
+
+	//Draw HUD Stuff
 	m_window.draw(m_scoreText);
 	m_window.draw(m_scorePreText);
 	m_window.draw(m_healthText);
@@ -526,6 +578,15 @@ void Game::render()
 	m_window.draw(hudMapBack);
 	m_window.draw(hudPlayerMap);
 	
+	if (m_gameState == GameState::DeathScreen)
+	{
+		//Draw GameplayStuff
+
+
+		//Draw HUD Stuff
+		m_window.setView(m_window.getDefaultView());
+		m_window.draw(m_deathScreenSprite);
+	}
 
 	m_window.display();
 }
@@ -537,6 +598,13 @@ void Game::render()
 /// </summary>
 void Game::setupSprite()
 {
+	if (!m_deathScreenTexture.loadFromFile("ASSETS\\IMAGES\\deathScreen.png"))
+	{
+		std::cout << "problem loading death screen" << std::endl;
+	}
+	m_deathScreenSprite.setTexture(m_deathScreenTexture);
+	m_deathScreenSprite.setPosition(0, 0);
+
 	if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\floorBoard.png"))
 	{
 		// simple error message if previous call fails
