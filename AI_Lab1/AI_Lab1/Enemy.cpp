@@ -7,82 +7,85 @@ Enemy::Enemy() {}
 /// Handles Movement
 /// </summary>
 void Enemy::HandleInput(sf::Vector2f t, int typeOfMovement) {
-	if (typeOfMovement == 0) 
+	if (Magnitude(t - m_position) < 500)
 	{
-		m_velocity = t - m_position;
-		m_velocity = Normalise(m_velocity);
-		m_velocity * m_maxSpeed;
-	}
-
-	//Algorithm for seeking a target
-	//Used by Nest Spawned Enemies
-	if (typeOfMovement == 1)
-	{
-		float timeToTarget = 0.5f;
-		m_velocity = t - m_position;
-
-		m_velocity *= timeToTarget;
-		float l = Magnitude(m_velocity);
-		if (l > m_maxSpeed) 
+		if (typeOfMovement == 0)
 		{
+			m_velocity = t - m_position;
 			m_velocity = Normalise(m_velocity);
-			m_velocity *= m_maxSpeed;
+			m_velocity * m_maxSpeed;
 		}
 
-		//If the enemies seeks, it will also fire at the enemy
-		FireBullets(t);
-	}
-
-	//Algorithm for wandering
-	//Used by workers
-	if (typeOfMovement == 2)
-	{
-		float dist = 1000;
-		float rad = 700;
-		sf::Vector2f travelPoint = Normalise(m_velocity) * dist;
-		travelPoint += m_position;
-
-		if (timer >= 50)
+		//Algorithm for seeking a target
+		//Used by Nest Spawned Enemies
+		if (typeOfMovement == 1)
 		{
-			timer = 0;
-			randAngle = (rand() % 75 + 15);
-		}
-		
-		else
-		{
-			timer++;
-		}
+			float timeToTarget = 0.5f;
+			m_velocity = t - m_position;
 
-		newTravelPoint = sf::Vector2f((rad * sin(randAngle) + newTravelPoint.x), (rad * cos(randAngle) + newTravelPoint.y));
-		m_velocity = newTravelPoint - m_position;
-		m_velocity = Normalise(m_velocity);
-		m_velocity * m_maxSpeed;
-	}
-
-	//Algorithm For the Swarming behaviour
-	//Used by Predators
-	if (typeOfMovement == 3)
-	{
-		float timeToTarget = 0.25f;
-
-		m_velocity = t - m_position;
-		
-		m_velocity *= timeToTarget;
-		float l = Magnitude(m_velocity);
-		if (l > m_maxSpeed) 
-		{
-			m_velocity = Normalise(m_velocity);
-			if (posInSwarm == 0)
+			m_velocity *= timeToTarget;
+			float l = Magnitude(m_velocity);
+			if (l > m_maxSpeed)
 			{
+				m_velocity = Normalise(m_velocity);
 				m_velocity *= m_maxSpeed;
 			}
+
+			//If the enemies seeks, it will also fire at the enemy
+			FireBullets(t);
+		}
+
+		//Algorithm for wandering
+		//Used by workers
+		if (typeOfMovement == 2)
+		{
+			float dist = 1000;
+			float rad = 700;
+			sf::Vector2f travelPoint = Normalise(m_velocity) * dist;
+			travelPoint += m_position;
+
+			if (timer >= 50)
+			{
+				timer = 0;
+				randAngle = (rand() % 75 + 15);
+			}
+
 			else
 			{
-				m_velocity *= (m_maxSpeed* (1 / (posInSwarm + .1f)));
+				timer++;
 			}
+
+			newTravelPoint = sf::Vector2f((rad * sin(randAngle) + newTravelPoint.x), (rad * cos(randAngle) + newTravelPoint.y));
+			m_velocity = newTravelPoint - m_position;
+			m_velocity = Normalise(m_velocity);
+			m_velocity * m_maxSpeed;
 		}
-		//If the enemies seeks, it will also fire at the enemy
-		FireBullets(t);
+
+		//Algorithm For the Swarming behaviour
+		//Used by Predators
+		if (typeOfMovement == 3)
+		{
+			float timeToTarget = 0.25f;
+
+			m_velocity = t - m_position;
+
+			m_velocity *= timeToTarget;
+			float l = Magnitude(m_velocity);
+			if (l > m_maxSpeed)
+			{
+				m_velocity = Normalise(m_velocity);
+				if (posInSwarm == 0)
+				{
+					m_velocity *= m_maxSpeed;
+				}
+				else
+				{
+					m_velocity *= (m_maxSpeed* (1 / (posInSwarm + .1f)));
+				}
+			}
+			//If the enemies seeks, it will also fire at the enemy
+			FireBullets(t);
+		}
 	}
 
 }
@@ -93,7 +96,7 @@ void Enemy::HandleInput(sf::Vector2f t, int typeOfMovement) {
 void Enemy::FireBullets(sf::Vector2f target) 
 {
 	
-	if (bulletCounter < 200)
+	if (bulletCounter < 60 * 1.2f)
 	{
 		bulletCounter++;
 	}

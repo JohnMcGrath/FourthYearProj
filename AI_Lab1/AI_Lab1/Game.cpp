@@ -42,15 +42,15 @@ void Game::run()
 
 	//Spawn From Nests
 	e1.Initialise(1);
-	//Workers
-	e2.Initialise(2);
-	//Boids
-	e3.Initialise(3);
-	//Swarm
-	e4.Initialise(4);
+	////Workers
+	//e2.Initialise(2);
+	////Boids
+	//e3.Initialise(3);
+	////Swarm
+	//e4.Initialise(4);
 
-	//Nest gets a random spawn location
-	m_nestSprite.setPosition(sf::Vector2f(rand() % m_window.getSize().x, rand() % m_window.getSize().y));
+	////Nest gets a random spawn location
+	//m_nestSprite.setPosition(sf::Vector2f(rand() % m_window.getSize().x, rand() % m_window.getSize().y));
 
 	m_player->setWallSprites(&m_mapLoader->getWallSprites());
 
@@ -161,7 +161,7 @@ void Game::EnemyHandler()
 					//Reduce Health by 10
 					m_player->setInvincible(true);
 					m_player->invinTimer = 0;
-					m_player->reduceHealth(5);
+					m_player->reduceHealth(25);
 					if (m_player->getHealth() <= 0)
 					{
 						m_gameState = GameState::DeathScreen;
@@ -174,6 +174,7 @@ void Game::EnemyHandler()
 	//Turns off after time
 	if (m_player->getInvincible())
 	{
+		m_player->getSprite().setColor(sf::Color::Black);
 		m_player->invinTimer++;
 	}
 	if (m_player->invinTimer >= 100)
@@ -187,78 +188,67 @@ void Game::EnemyHandler()
 /// </summary>
 void Game::WorkerHandler()
 {
-	if (workersEns.size() < 15)
-	{
-		e2.setPosition(sf::Vector2f(rand() % 3500, rand() % 3500));
-		workersEns.push_back(e2);
-	}
 	//Get player collsion box
 	playerBound = m_player->getSprite().getGlobalBounds();
 	playerBoundShap.setSize(sf::Vector2f(playerBound.width, playerBound.height));
 	playerBoundShap.setPosition(sf::Vector2f(playerBound.left, playerBound.top));
 
-
-
 	for (size_t h = 0; h < m_mapLoader->getWallSprites().size(); h++)
 	{
-		//if (m_player->Magnitude(playerBoundShap.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 20)
-		//If bullet hits wall
-
-		//WANT TO SMOOTHEN OUT COLLISION
-		if (playerBoundShap.getGlobalBounds().intersects(m_mapLoader->getWallSprites().at(h).getGlobalBounds()))
+		//Only check walls within a distance of 200 pixels
+		if (m_player->Magnitude(playerBoundShap.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 200)
 		{
-			sf::Vector2f tempPlayerPos = m_player->getPosition();
-			sf::Vector2f tempSpritePos = m_mapLoader->getWallSprites().at(h).getPosition();
+			//If bullet hits wall
 
-			if (tempPlayerPos.y < tempSpritePos.y)
+			//WANT TO SMOOTHEN OUT COLLISION
+			if (playerBoundShap.getGlobalBounds().intersects(m_mapLoader->getWallSprites().at(h).getGlobalBounds()))
 			{
-				m_player->setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y -= 5));
-			}
+				sf::Vector2f tempPlayerPos = m_player->getPosition();
+				sf::Vector2f tempSpritePos = m_mapLoader->getWallSprites().at(h).getPosition();
 
-			else if (tempPlayerPos.y > tempSpritePos.y)
-			{
-				m_player->setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y += 5));
-			}
-			
-			if (tempPlayerPos.x < tempSpritePos.x)
-			{
-				m_player->setPosition(sf::Vector2f(tempPlayerPos.x -= 5, tempPlayerPos.y));
-			}
+				if (tempPlayerPos.y < tempSpritePos.y)
+				{
+					m_player->setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y -= 5));
+				}
 
-			else if (tempPlayerPos.y > tempSpritePos.y)
-			{
-				m_player->setPosition(sf::Vector2f(tempPlayerPos.x += 5, tempPlayerPos.y));
-			}
+				else if (tempPlayerPos.y > tempSpritePos.y)
+				{
+					m_player->setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y += 5));
+				}
 
-			std::cout << "Wall Hit" << std::endl;
-			
+				if (tempPlayerPos.x < tempSpritePos.x)
+				{
+					m_player->setPosition(sf::Vector2f(tempPlayerPos.x -= 5, tempPlayerPos.y));
+				}
+
+				else if (tempPlayerPos.y > tempSpritePos.y)
+				{
+					m_player->setPosition(sf::Vector2f(tempPlayerPos.x += 5, tempPlayerPos.y));
+				}
+
+				std::cout << "Wall Hit" << std::endl;
+			}
 		}
 	}
-
-
-
-
-
-
 
 	//Update loop
-	for (size_t j = 0; j < workersEns.size(); j++)
-	{
-		workersEns[j].Update(m_player->getPosition(), centrePoint, 2);
+	//for (size_t j = 0; j < workersEns.size(); j++)
+	//{
+	//	workersEns[j].Update(m_player->getPosition(), centrePoint, 2);
 
-		//Get worker collision box
-		workerBound = workersEns[j].getSprite().getGlobalBounds();
-		workerBoundShape.setSize(sf::Vector2f(workerBound.width, workerBound.height));
-		workerBoundShape.setPosition(sf::Vector2f(workerBound.left, workerBound.top));
+	//	//Get worker collision box
+	//	workerBound = workersEns[j].getSprite().getGlobalBounds();
+	//	workerBoundShape.setSize(sf::Vector2f(workerBound.width, workerBound.height));
+	//	workerBoundShape.setPosition(sf::Vector2f(workerBound.left, workerBound.top));
 
-		if (workerBoundShape.getGlobalBounds().intersects(playerBoundShap.getGlobalBounds()))
-		{
-			//delete the worker and gain a point
-			workersEns.erase(workersEns.begin() + j);
-			score++;
-			break;
-		}
-	}
+	//	if (workerBoundShape.getGlobalBounds().intersects(playerBoundShap.getGlobalBounds()))
+	//	{
+	//		//delete the worker and gain a point
+	//		workersEns.erase(workersEns.begin() + j);
+	//		score++;
+	//		break;
+	//	}
+	//}
 
 	//Damage Player if enemy touches you
 	for (size_t k = 0; k < enemies.size(); k++)
@@ -399,10 +389,10 @@ void Game::BulletHandler()
 		bullets[i].m_shape.move(bullets[i].m_velocity);
 
 		//If the bullet is a distance of 2000 or more pixels from the player, the shot is deleted
-		if (m_player->Magnitude(bullets[i].m_shape.getPosition() - m_player->getPosition()) > 400)
+		if (m_player->Magnitude(bullets[i].m_shape.getPosition() - m_player->getPosition()) > 600)
 		{
 			bullets.erase(bullets.begin() + i);
-			break;
+			//break;
 		}
 
 		//if the bullet wasnt deleted
@@ -416,12 +406,14 @@ void Game::BulletHandler()
 			//////CAUSES LAG IF BULLET GOES OFF SCREEN
 			//for (size_t h = 0; h < m_mapLoader->getWallSprites().size(); h++)
 			//{
-			//	//if (m_player->Magnitude(bullets[i].m_shape.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 20)
-			//	////If bullet hits wall
-			//	if (bulletBoundShape.getGlobalBounds().intersects(m_mapLoader->getWallSprites().at(h).getGlobalBounds()))
+			//	if (m_player->Magnitude(bullets[i].m_shape.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 20)
 			//	{
-			//		bullets.erase(bullets.begin() + i);
-			//		//break;
+			//		////If bullet hits wall
+			//		if (bulletBoundShape.getGlobalBounds().intersects(m_mapLoader->getWallSprites().at(h).getGlobalBounds()))
+			//		{
+			//			bullets.erase(bullets.begin() + i);
+			//			//break;
+			//		}
 			//	}
 			//}
 
