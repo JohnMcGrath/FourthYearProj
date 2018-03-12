@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <sstream>
 #include "MapLoader.h"
+#include "SoundManager.h"
 
 class Player;
 class Enemy;
@@ -201,6 +202,8 @@ private:
 	int m_gameState = GameState::Gameplaying;
 
 	MapLoader * m_mapLoader;
+
+	SoundManager * m_soundManager;
 };
 
 #endif

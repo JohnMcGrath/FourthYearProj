@@ -25,7 +25,7 @@ Game::~Game()
 void Game::run()
 {
 	m_mapLoader = new MapLoader();
-
+	m_soundManager = new SoundManager();
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	sf::Time timePerFrame = sf::seconds(1.f / 60.f); // 60 fps
