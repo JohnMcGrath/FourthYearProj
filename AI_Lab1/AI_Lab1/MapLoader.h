@@ -35,9 +35,11 @@ private:
 	sf::Texture m_wallTexture;
 	sf::Sprite m_floorSprite;
 	sf::Texture m_floorTexture;
+	sf::Vector2f tempVec;
 	std::vector<sf::FloatRect> m_wallPos;
 	std::vector<sf::FloatRect> m_floorPos;
 	std::vector<sf::Sprite> m_sprites;
 	std::vector<sf::Sprite> m_wallSprites;
 	std::vector<sf::Sprite> m_floorSprites;
+	std::vector<sf::Vector2f> m_nodes;
 };

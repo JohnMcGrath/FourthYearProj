@@ -60,6 +60,10 @@ void MapLoader::Init()
 				m_tempSprite.setTexture(m_floorTexture);
 				m_tempSprite.setScale(sf::Vector2f(0.5f, 0.5f));
 				m_floorSprites.push_back(m_tempSprite);
+
+				tempVec.x = m_tempSprite.getPosition().x + (m_tempSprite.getGlobalBounds().width / 2);
+				tempVec.y = m_tempSprite.getPosition().y + (m_tempSprite.getGlobalBounds().height / 2);
+				m_nodes.push_back(tempVec);
 			}
 			
 		}

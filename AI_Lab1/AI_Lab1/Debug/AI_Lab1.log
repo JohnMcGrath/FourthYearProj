@@ -1,4 +1,14 @@
-﻿  Game.cpp
+﻿  MapLoader.cpp
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\maploader.cpp(40): warning C4018: '<': signed/unsigned mismatch
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\maploader.cpp(44): warning C4018: '<': signed/unsigned mismatch
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\maploader.cpp(50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\maploader.cpp(59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\maploader.cpp(76): warning C4018: '<': signed/unsigned mismatch
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\maploader.cpp(80): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  main.cpp
+  Game.cpp
 c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(11): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
 c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(34): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(53): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
@@ -11,5 +21,6 @@ c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(400): 
 c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(514): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(521): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(690): warning C4305: 'argument': truncation from 'double' to 'float'
+  Generating Code...
   AI_Lab1.vcxproj -> C:\Users\User\Desktop\4thYearProj\FourthYearProj\AI_Lab1\Debug\AI_Lab1.exe
   AI_Lab1.vcxproj -> C:\Users\User\Desktop\4thYearProj\FourthYearProj\AI_Lab1\Debug\AI_Lab1.pdb (Partial PDB)
