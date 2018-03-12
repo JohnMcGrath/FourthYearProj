@@ -89,6 +89,7 @@ private:
 	void CheckIfFiring();
 	void RestartGame();
 	void ChangeController();
+	void spawnEnemies(std::vector<sf::Vector2f> spawns);
 
 	/// <summary>
 	///Checks for the nearest worker object, causes frame stutter upon starting app if used

@@ -54,6 +54,8 @@ void Game::run()
 
 	m_player->setWallSprites(&m_mapLoader->getWallSprites());
 
+	spawnEnemies(m_mapLoader->getSpawnPoints());
+
 	while (m_window.isOpen())
 	{
 		processEvents(); // as many as possible
@@ -83,11 +85,7 @@ void Game::RestartGame()
 	{
 		enemies.erase(enemies.begin() + i);
 	}
-	
-	/*for (int i = 0; i < boids.size(); i++)
-	{
-		boids.erase(boids.begin() + i);
-	}*/
+
 	m_player->setHeatlth(100);
 }
 
@@ -117,6 +115,18 @@ void Game::processEvents()
 		}
 	}
 }
+
+void Game::spawnEnemies(std::vector<sf::Vector2f> spawns)
+{
+	std::vector<sf::Vector2f> tempSpawns = spawns;
+	
+	for (int i = 0; i < tempSpawns.size(); i++)
+	{
+			e1.setPosition(tempSpawns.at(i));
+			enemies.push_back(e1);
+	}
+}
+
 /// <summary>
 /// Handles all events and collisions relating to the enemies and the nests
 /// </summary>
@@ -125,32 +135,6 @@ void Game::EnemyHandler()
 	if (spawnCounter < 40)
 	{
 		spawnCounter++;
-	}
-
-	if ( spawnCounter >= 40 && predators.size() < 4)
-	{
-		e4.setPosInSwarm(predators.size());
-		e4.setPosition(sf::Vector2f(rand() % 3200, rand() % 2500));
-		predators.push_back(e4);
-	}
-
-	//6 Nest will spawn on the map
-	if (nests.size() < 6)
-	{
-		//Nest spawn randomly each time
-		m_nestSprite.setPosition(sf::Vector2f(rand() % 3200, rand() % 2500));
-		m_nestSprite.setOrigin(m_nestSprite.getGlobalBounds().width, m_nestSprite.getGlobalBounds().height);
-		nests.push_back(m_nestSprite);
-	}
-
-	//Uses a spawn counter, no more than 5 nest enemies on screen
-	if (spawnCounter >= 40 & enemies.size() < 5)
-	{
-		//Could spawn at any nest
-		spawnCounter = 0;
-		int tempNestPos = rand() % nests.size();
-		e1.setPosition(sf::Vector2f(nests[tempNestPos].getPosition().x, nests[tempNestPos].getPosition().y));
-		enemies.push_back(e1);
 	}
 
 	for (size_t i = 0; i < enemies.size(); i++)
@@ -177,7 +161,7 @@ void Game::EnemyHandler()
 					//Reduce Health by 10
 					m_player->setInvincible(true);
 					m_player->invinTimer = 0;
-					m_player->reduceHealth(10);
+					m_player->reduceHealth(5);
 					if (m_player->getHealth() <= 0)
 					{
 						m_gameState = GameState::DeathScreen;
@@ -196,12 +180,6 @@ void Game::EnemyHandler()
 	{
 		m_player->setInvincible(false);
 	}
-
-	////Using this will cause frame stutter, commenting out increases framerate
-	//for (size_t i = 0; i < boids.size(); i++)
-	//{
-	//	boids[i].Update(CheckForNearestWorker(boids[i].getPosition()), playerCentre, 1);
-	//}
 }
 
 /// <summary>
@@ -281,6 +259,8 @@ void Game::WorkerHandler()
 			break;
 		}
 	}
+
+	//Damage Player if enemy touches you
 	for (size_t k = 0; k < enemies.size(); k++)
 	{
 		//Same variables are reused
@@ -289,7 +269,7 @@ void Game::WorkerHandler()
 		workerBoundShape.setPosition(sf::Vector2f(workerBound.left, workerBound.top));
 		if (workerBoundShape.getGlobalBounds().intersects(playerBoundShap.getGlobalBounds()))
 		{
-			enemies.erase(enemies.begin() + k);
+			/*enemies.erase(enemies.begin() + k);*/
 
 			//If the player is not invincible
 			if (!m_player->getInvincible())
@@ -395,7 +375,6 @@ void Game::BulletHandler()
 	if (m_controllerMode == Controller::KeyboardContr)
 	{
 		cursorPos = (sf::Vector2f)sf::Mouse::getPosition(m_window);
-		//cursorPos = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
 
 		aimDir = cursorPos - sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2);
 	}

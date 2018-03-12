@@ -52,7 +52,7 @@ void MapLoader::Init()
 				m_tempSprite.setScale(sf::Vector2f(0.5f,0.5f));
 				m_wallSprites.push_back(m_tempSprite);
 			}
-			else
+			else if ((m_rows.at(i).at(j) == 0)||(m_rows.at(i).at(j) == 2))
 			{
 				//Draw the floor
 				std::cout << "  ";
@@ -64,6 +64,11 @@ void MapLoader::Init()
 				tempVec.x = m_tempSprite.getPosition().x + (m_tempSprite.getGlobalBounds().width / 2);
 				tempVec.y = m_tempSprite.getPosition().y + (m_tempSprite.getGlobalBounds().height / 2);
 				m_nodes.push_back(tempVec);
+
+				if (m_rows.at(i).at(j) == 2)
+				{
+					m_spawnPoints.push_back(tempVec);
+				}
 			}
 			
 		}
