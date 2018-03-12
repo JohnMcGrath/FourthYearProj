@@ -192,7 +192,7 @@ void Player::Initialise() {
 
 	m_sprite.setTexture(m_texture);
 	m_sprite.setScale(sf::Vector2f(0.25, 0.25));
-	m_sprite.setPosition(sf::Vector2f(300, 300)); 
+	m_sprite.setPosition(m_startingPosition);
 	m_sprite.setOrigin(75,225);
 }
 

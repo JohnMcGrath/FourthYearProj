@@ -13,7 +13,7 @@ enum GameState
 {
 	Gameplaying = 0,
 	DeathScreen = 1,
-	WinScreen =2
+	WinScreen = 2
 };
 
 class Player
@@ -97,6 +97,8 @@ public:
 	/// <summary>
 	int invinTimer = 0;
 
+	sf::Vector2f getStartingPosition() { return m_startingPosition; }
+
 private:
 	/// <summary>
 	///Vector used when a small temporary value is needed
@@ -152,4 +154,6 @@ private:
 	std::vector<sf::Sprite>* m_copyOfWalls;
 
 	sf::Vector2f m_previousPos;
+
+	sf::Vector2f m_startingPosition{ 300, 300 };
 };

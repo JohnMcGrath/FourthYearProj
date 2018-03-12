@@ -145,7 +145,7 @@ private:
 	/// <summary>
 	///player's score
 	/// <summary>
-	int score = 0;
+	int score = 7;
 
 	/// <summary>
 	/// Floats and rectShapes used to represent bounding boxes
@@ -178,8 +178,14 @@ private:
 	sf::Text m_healthText;
 	sf::Text m_healthPreText;
 
+	sf::Text m_controlModePreText;
+	sf::Text m_controlModeText;
+
 	sf::Texture m_deathScreenTexture;
 	sf::Sprite m_deathScreenSprite;
+
+	sf::Texture m_winScreenTexture;
+	sf::Sprite m_winScreenSprite;
 
 	int nestCounter = 0;
 

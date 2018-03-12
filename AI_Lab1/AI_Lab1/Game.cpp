@@ -81,12 +81,11 @@ void Game::ResizeView(const sf::RenderWindow& window, sf::View view)
 
 void Game::RestartGame()
 {
-	for (int i = 0; i < enemies.size(); i++)
-	{
-		enemies.erase(enemies.begin() + i);
-	}
-
+	enemies.clear();
 	m_player->setHeatlth(100);
+	m_player->setPosition(m_player->getStartingPosition());
+	spawnEnemies(m_mapLoader->getSpawnPoints());
+	score = enemies.size();
 }
 
 /// <summary>
@@ -166,7 +165,6 @@ void Game::EnemyHandler()
 					if (m_player->getHealth() <= 0)
 					{
 						m_gameState = GameState::DeathScreen;
-						RestartGame();
 					}
 				}
 			}
@@ -274,7 +272,6 @@ void Game::WorkerHandler()
 				if (m_player->getHealth() <= 0)
 				{
 					m_gameState = GameState::DeathScreen;
-					RestartGame();
 				}
 			}
 		}
@@ -434,13 +431,17 @@ void Game::BulletHandler()
 					if (enemies[k].getHitsTaken() >= 4)
 					{
 						m_soundManager->playSound("enemyDeath");
+						score--;
 						enemies.erase(enemies.begin() + k);
+						if (score <= 0)
+						{
+							m_gameState = GameState::WinScreen;
+						}
 					}
 					else
 					{
 						m_soundManager->playSound("enemyGrunt");
 					}
-					//break;
 				}
 			}
 
@@ -493,7 +494,7 @@ void Game::HUDHandler()
 	std::stringstream sc;
 	sc << score;
 	m_scoreText.setString(sc.str().c_str());
-	m_scorePreText.setString("Score: ");
+	m_scorePreText.setString("Enemies Remaining: ");
 
 	m_healthPreText.setPosition(m_scorePreText.getPosition().x, m_scorePreText.getPosition().y + 50);
 	m_healthText.setPosition(m_healthPreText.getPosition().x + (m_healthPreText.getCharacterSize() * (m_healthPreText.getString().getSize() / 1.5)), m_healthPreText.getPosition().y);
@@ -502,9 +503,29 @@ void Game::HUDHandler()
 	m_healthText.setString(hl.str().c_str());
 	m_healthPreText.setString("Health: ");
 
-	hudMapBack.setPosition(m_player->getPosition().x - 500, m_player->getPosition().y - 350);
-	hudPlayerMap.setPosition(sf::Vector2f(hudMapBack.getPosition().x + (hudMapBack.getSize().x / 2), hudMapBack.getPosition().y + (hudMapBack.getSize().y / 2)));
+	m_controlModePreText.setPosition(m_healthPreText.getPosition().x, m_healthPreText.getPosition().y + 50);
+	m_controlModeText.setPosition(m_controlModePreText.getPosition().x + (m_controlModeText.getCharacterSize() * (m_controlModePreText.getString().getSize() / 1.5)), m_controlModePreText.getPosition().y);
+	std::string cm;
+	if (m_controllerMode == 0)
+	{
+		cm = "Keyboard";
+	}
+	else if (m_controllerMode == 1)
+	{
+		cm = "Joystick";
+	}
+	else
+	{
+		cm = "TouchScreen";
+	}
+	m_controlModeText.setString(cm);
+	m_controlModePreText.setString("Control Mode: ");
 
+	
+
+	/*hudMapBack.setPosition(m_player->getPosition().x - 500, m_player->getPosition().y - 350);
+	hudPlayerMap.setPosition(sf::Vector2f(hudMapBack.getPosition().x + (hudMapBack.getSize().x / 2), hudMapBack.getPosition().y + (hudMapBack.getSize().y / 2)));
+*/
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
 		hudEnemyMap.setPosition(sf::Vector2f(hudMapBack.getPosition().x + (enemies[i].getPosition().x / 8), hudMapBack.getPosition().y + (enemies[i].getPosition().y / 8)));
@@ -543,12 +564,13 @@ void Game::update(sf::Time t_deltaTime)
 		ChangeController();
 	}
 	
-	else if (m_gameState == GameState::DeathScreen)
+	else if ((m_gameState == GameState::DeathScreen) || (m_gameState == GameState::WinScreen))
 	{
-		std::cout << "You Died" << std::endl;
+		std::cout << "You Died/Won" << std::endl;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
 			m_gameState = GameState::Gameplaying;
+			RestartGame();
 		}
 	}
 	
@@ -578,21 +600,6 @@ void Game::render()
 		m_window.draw(enemies[i].getSprite());
 	}
 
-	for (size_t i = 0; i < boids.size(); i++)
-	{
-		m_window.draw(boids[i].getSprite());
-	}
-
-	for (size_t i = 0; i < nests.size(); i++)
-	{
-		m_window.draw(nests[i]);
-	}
-
-	for (size_t i = 0; i < workersEns.size(); i++)
-	{
-		m_window.draw(workersEns[i].getSprite());
-	}
-
 	for (size_t i = 0; i < bullets.size(); i++)
 	{
 		m_window.draw(bullets[i].m_shape);
@@ -605,9 +612,11 @@ void Game::render()
 	m_window.draw(m_scorePreText);
 	m_window.draw(m_healthText);
 	m_window.draw(m_healthPreText);
+	m_window.draw(m_controlModeText);
+	m_window.draw(m_controlModePreText);
 
-	m_window.draw(hudMapBack);
-	m_window.draw(hudPlayerMap);
+	/*m_window.draw(hudMapBack);
+	m_window.draw(hudPlayerMap);*/
 	
 	if (m_gameState == GameState::DeathScreen)
 	{
@@ -617,6 +626,16 @@ void Game::render()
 		//Draw HUD Stuff
 		m_window.setView(m_window.getDefaultView());
 		m_window.draw(m_deathScreenSprite);
+	}
+
+	else if (m_gameState == GameState::WinScreen)
+	{
+		//Draw GameplayStuff
+
+
+		//Draw HUD Stuff
+		m_window.setView(m_window.getDefaultView());
+		m_window.draw(m_winScreenSprite);
 	}
 
 	m_window.display();
@@ -636,17 +655,24 @@ void Game::setupSprite()
 	m_deathScreenSprite.setTexture(m_deathScreenTexture);
 	m_deathScreenSprite.setPosition(0, 0);
 
-	if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\floorBoard.png"))
+	if (!m_winScreenTexture.loadFromFile("ASSETS\\IMAGES\\winScreen.png"))
 	{
-		// simple error message if previous call fails
-		std::cout << "problem loading logo" << std::endl;
+		std::cout << "problem loading win screen" << std::endl;
 	}
-	m_logoSprite.setPosition(-200, - 200);
-	m_logoSprite.setScale(sf::Vector2f(0.75, 0.75));
-	m_logoTexture.setRepeated(true);
-	m_logoSprite.setTexture(m_logoTexture);
-	m_logoSprite.setTextureRect(sf::IntRect(0, 0, 3000, 3000));
-	m_logoSprite.setPosition(-300, -300);
+	m_winScreenSprite.setTexture(m_winScreenTexture);
+	m_winScreenSprite.setPosition(0, 0);
+
+	//if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\floorBoard.png"))
+	//{
+	//	// simple error message if previous call fails
+	//	std::cout << "problem loading logo" << std::endl;
+	//}
+	//m_logoSprite.setPosition(-200, - 200);
+	//m_logoSprite.setScale(sf::Vector2f(0.75, 0.75));
+	//m_logoTexture.setRepeated(true);
+	//m_logoSprite.setTexture(m_logoTexture);
+	//m_logoSprite.setTextureRect(sf::IntRect(0, 0, 3000, 3000));
+	//m_logoSprite.setPosition(-300, -300);
 
 	if (!m_scoreFont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf"))
 	{
@@ -662,12 +688,18 @@ void Game::setupSprite()
 	m_healthText.setFillColor(sf::Color::White);
 	m_healthText.setFont(m_scoreFont);
 
-	if (!m_nestTexture.loadFromFile("ASSETS\\IMAGES\\nest.png"))
-	{
-		std::cout << "problem loading nest" << std::endl;
-	}
-	m_nestSprite.setTexture(m_nestTexture);
-	m_nestSprite.setScale(sf::Vector2f(0.2, 0.2));
+	m_controlModePreText.setFillColor(sf::Color::White);
+	m_controlModePreText.setFont(m_scoreFont);
+
+	m_controlModeText.setFillColor(sf::Color::White);
+	m_controlModeText.setFont(m_scoreFont);
+
+	//if (!m_nestTexture.loadFromFile("ASSETS\\IMAGES\\nest.png"))
+	//{
+	//	std::cout << "problem loading nest" << std::endl;
+	//}
+	//m_nestSprite.setTexture(m_nestTexture);
+	//m_nestSprite.setScale(sf::Vector2f(0.2, 0.2));
 
 	hudMapBack.setSize(sf::Vector2f(m_window.getView().getSize().x / 10, m_window.getView().getSize().y / 10));
 	hudMapBack.setFillColor(sf::Color::White);
