@@ -41,7 +41,7 @@ void Game::run()
 	//Initialise the original object of each type of enemies
 
 	//Spawn From Nests
-	e1.Initialise(1);
+	e1.Initialise(1, m_soundManager);
 	////Workers
 	//e2.Initialise(2);
 	////Boids
@@ -158,6 +158,7 @@ void Game::EnemyHandler()
 				//The player's invincibilty turns on
 				if (!m_player->getInvincible())
 				{
+					m_soundManager->playSound("playerGrunt");
 					//Reduce Health by 10
 					m_player->setInvincible(true);
 					m_player->invinTimer = 0;
@@ -265,6 +266,7 @@ void Game::WorkerHandler()
 			if (!m_player->getInvincible())
 			{
 				//Reduce Health by 10
+				m_soundManager->playSound("playerGrunt");
 				m_player->setInvincible(true);
 				m_player->invinTimer = 0;
 				m_player->reduceHealth(10);
@@ -354,7 +356,7 @@ void Game::BulletHandler()
 			bulletCounter = 0;
 			b1.m_shape.setPosition(m_player->getPosition());
 			b1.m_velocity = normalisedAimDir * b1.m_maxSpeed;
-
+			m_soundManager->playSound("playerGun");
 			bullets.push_back(Bullet(b1));
 		}
 
@@ -431,9 +433,14 @@ void Game::BulletHandler()
 					enemies[k].addHitsTaken(1);
 					if (enemies[k].getHitsTaken() >= 4)
 					{
+						m_soundManager->playSound("enemyDeath");
 						enemies.erase(enemies.begin() + k);
 					}
-					break;
+					else
+					{
+						m_soundManager->playSound("enemyGrunt");
+					}
+					//break;
 				}
 			}
 
@@ -526,6 +533,8 @@ void Game::update(sf::Time t_deltaTime)
 
 		//View
 		playerView.setCenter(m_player->getPosition());
+
+		//m_soundManager->update();
 
 		HUDHandler();
 		BulletHandler();

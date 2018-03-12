@@ -110,7 +110,7 @@ void Enemy::FireBullets(sf::Vector2f target)
 		b.m_shape.setFillColor(sf::Color::Green);
 
 		b.m_velocity = aimDirNormal * b.m_maxSpeed;
-
+		m_soundManager->playSound("enemyGun1");
 		bullets.push_back(b);
 	}
 
@@ -122,8 +122,8 @@ void Enemy::FireBullets(sf::Vector2f target)
 	{
 		bullets[i].m_shape.move(bullets[i].m_velocity);
 
-		//If the distance is great than 200, delete the bullet
-		if (Magnitude(bullets[i].m_shape.getPosition() - m_sprite.getPosition()) > 2000)
+		//If the distance is great than 600, delete the bullet
+		if (Magnitude(bullets[i].m_shape.getPosition() - m_sprite.getPosition()) > 600)
 		{
 			bullets.erase(bullets.begin() + i);
 			break;
@@ -168,8 +168,8 @@ sf::Vector2f Enemy::Normalise(sf::Vector2f v)
 /// <summary>
 /// Initialisation
 /// </summary>
-void Enemy::Initialise(int color) {
-
+void Enemy::Initialise(int color, SoundManager * soundMang) {
+	m_soundManager = soundMang;
 	if (color == 2)
 	{
 		if (!m_texture.loadFromFile("ASSETS\\IMAGES\\Worker.png"))

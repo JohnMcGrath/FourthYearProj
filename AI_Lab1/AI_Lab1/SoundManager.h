@@ -8,14 +8,25 @@ public:
 	SoundManager();
 	void init();
 	void playSound(std::string soundName);
+	void update();
 	
 private:
-	sf::SoundBuffer m_buffer;
+	sf::Sound m_soundPlayer;
 	sf::Music m_backgroundSong;
-	sf::Sound m_playerGunShot;
-	sf::Sound m_enemyGunShot;
-	sf::Sound m_playerGrunt;
-	sf::Sound m_enemyGrunt;
 
-	std::map<std::string, sf::Sound> m_sounds;
+	sf::Sound m_playerGunShotSound;
+	sf::Sound m_enemyGunShotSound;
+	sf::Sound m_playerGruntSound;
+	sf::Sound m_enemyGruntSound;
+	sf::Sound m_enemyDeathSound;
+
+	sf::SoundBuffer m_playerGunShot;
+	sf::SoundBuffer m_enemyGunShot;
+	sf::SoundBuffer m_playerGrunt;
+	sf::SoundBuffer m_enemyGrunt;
+	sf::SoundBuffer m_enemyDeath;
+
+	std::map<std::string, sf::SoundBuffer*> m_sounds;
+	std::map<std::string, sf::Sound*> m_soundPlayers;
+	std::vector<sf::Sound> m_queue;
 };

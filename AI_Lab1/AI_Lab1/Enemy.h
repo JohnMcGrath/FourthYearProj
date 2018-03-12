@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Bullet.h"
+#include "SoundManager.h"
 
 class Bullet;
 
@@ -23,6 +24,14 @@ public:
 	/// <summary>
 	Enemy();
 
+	/*/// <summary>
+	///Constructor
+	/// <summary>
+	Enemy(SoundManager* soundMang)
+	{
+		m_soundManager = soundMang;
+	}*/
+
 
 	/// <summary>
 	///Fires bullets in the direction of the target
@@ -38,7 +47,7 @@ public:
 	/// <summary>
 	///Initialisation
 	/// <summary>
-	void Initialise(int color);
+	void Initialise(int color, SoundManager* soundMang);
 
 	/// <summary>
 	///Update Loop
@@ -141,4 +150,6 @@ private:
 	sf::CircleShape hudShape;
 
 	int posInSwarm;
+
+	SoundManager * m_soundManager;
 };
