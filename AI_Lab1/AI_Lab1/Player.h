@@ -80,6 +80,12 @@ public:
 	sf::Vector2f Normalise(sf::Vector2f v);
 	float DotProduct(sf::Vector2f v1, sf::Vector2f v2);
 	float AngleBetweenVectors(sf::Vector2f v1, sf::Vector2f v2);
+	void setWallSprites(std::vector<sf::Sprite> *sprites)
+	{
+		m_copyOfWalls = sprites;
+	}
+	
+	void checkWallCollision();
 
 	/// <summary>
 	///Adjust's player's velocity by orientation
@@ -142,4 +148,8 @@ private:
 	bool m_touchControlPressOnceD = false;
 
 	bool m_touchControlIsFiring = false;
+
+	std::vector<sf::Sprite>* m_copyOfWalls;
+
+	sf::Vector2f m_previousPos;
 };

@@ -52,6 +52,8 @@ void Game::run()
 	//Nest gets a random spawn location
 	m_nestSprite.setPosition(sf::Vector2f(rand() % m_window.getSize().x, rand() % m_window.getSize().y));
 
+	m_player->setWallSprites(&m_mapLoader->getWallSprites());
+
 	while (m_window.isOpen())
 	{
 		processEvents(); // as many as possible
@@ -82,10 +84,10 @@ void Game::RestartGame()
 		enemies.erase(enemies.begin() + i);
 	}
 	
-	for (int i = 0; i < boids.size(); i++)
+	/*for (int i = 0; i < boids.size(); i++)
 	{
 		boids.erase(boids.begin() + i);
-	}
+	}*/
 	m_player->setHeatlth(100);
 }
 
@@ -195,11 +197,11 @@ void Game::EnemyHandler()
 		m_player->setInvincible(false);
 	}
 
-	//Using this will cause frame stutter, commenting out increases framerate
-	for (size_t i = 0; i < boids.size(); i++)
-	{
-		boids[i].Update(CheckForNearestWorker(boids[i].getPosition()), playerCentre, 1);
-	}
+	////Using this will cause frame stutter, commenting out increases framerate
+	//for (size_t i = 0; i < boids.size(); i++)
+	//{
+	//	boids[i].Update(CheckForNearestWorker(boids[i].getPosition()), playerCentre, 1);
+	//}
 }
 
 /// <summary>
@@ -216,6 +218,50 @@ void Game::WorkerHandler()
 	playerBound = m_player->getSprite().getGlobalBounds();
 	playerBoundShap.setSize(sf::Vector2f(playerBound.width, playerBound.height));
 	playerBoundShap.setPosition(sf::Vector2f(playerBound.left, playerBound.top));
+
+
+
+	for (size_t h = 0; h < m_mapLoader->getWallSprites().size(); h++)
+	{
+		//if (m_player->Magnitude(playerBoundShap.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 20)
+		//If bullet hits wall
+
+		//WANT TO SMOOTHEN OUT COLLISION
+		if (playerBoundShap.getGlobalBounds().intersects(m_mapLoader->getWallSprites().at(h).getGlobalBounds()))
+		{
+			sf::Vector2f tempPlayerPos = m_player->getPosition();
+			sf::Vector2f tempSpritePos = m_mapLoader->getWallSprites().at(h).getPosition();
+
+			if (tempPlayerPos.y < tempSpritePos.y)
+			{
+				m_player->setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y -= 5));
+			}
+
+			else if (tempPlayerPos.y > tempSpritePos.y)
+			{
+				m_player->setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y += 5));
+			}
+			
+			if (tempPlayerPos.x < tempSpritePos.x)
+			{
+				m_player->setPosition(sf::Vector2f(tempPlayerPos.x -= 5, tempPlayerPos.y));
+			}
+
+			else if (tempPlayerPos.y > tempSpritePos.y)
+			{
+				m_player->setPosition(sf::Vector2f(tempPlayerPos.x += 5, tempPlayerPos.y));
+			}
+
+			std::cout << "Wall Hit" << std::endl;
+			
+		}
+	}
+
+
+
+
+
+
 
 	//Update loop
 	for (size_t j = 0; j < workersEns.size(); j++)
@@ -374,7 +420,7 @@ void Game::BulletHandler()
 		bullets[i].m_shape.move(bullets[i].m_velocity);
 
 		//If the bullet is a distance of 2000 or more pixels from the player, the shot is deleted
-		if (m_player->Magnitude(bullets[i].m_shape.getPosition() - m_player->getPosition()) > 2000)
+		if (m_player->Magnitude(bullets[i].m_shape.getPosition() - m_player->getPosition()) > 400)
 		{
 			bullets.erase(bullets.begin() + i);
 			break;
@@ -388,14 +434,15 @@ void Game::BulletHandler()
 			bulletBoundShape.setSize(sf::Vector2f(bulletBound.width, bulletBound.height));
 			bulletBoundShape.setPosition(sf::Vector2f(bulletBound.left, bulletBound.top));
 
-			//CAUSES LAG IF BULLET GOES OFF SCREEN
+			//////CAUSES LAG IF BULLET GOES OFF SCREEN
 			//for (size_t h = 0; h < m_mapLoader->getWallSprites().size(); h++)
 			//{
-			//	//If bullet hits wall
+			//	//if (m_player->Magnitude(bullets[i].m_shape.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 20)
+			//	////If bullet hits wall
 			//	if (bulletBoundShape.getGlobalBounds().intersects(m_mapLoader->getWallSprites().at(h).getGlobalBounds()))
 			//	{
 			//		bullets.erase(bullets.begin() + i);
-			//		break;
+			//		//break;
 			//	}
 			//}
 
@@ -419,20 +466,20 @@ void Game::BulletHandler()
 				}
 			}
 
-			for (size_t j = 0; j < boids.size(); j++)
-			{
-				//Gets the enemy boid's bounding box
-				enemyBound = boids[j].getSprite().getGlobalBounds();
-				enemyBoundShap.setSize(sf::Vector2f(enemyBound.width, enemyBound.height));
-				enemyBoundShap.setPosition(sf::Vector2f(enemyBound.left, enemyBound.top));
-				
-				if (bulletBoundShape.getGlobalBounds().intersects(enemyBoundShap.getGlobalBounds()))
-				{
-					bullets.erase(bullets.begin() + i);
-					boids.erase(boids.begin() + j);
-					break;
-				}
-			}
+			//for (size_t j = 0; j < boids.size(); j++)
+			//{
+			//	//Gets the enemy boid's bounding box
+			//	enemyBound = boids[j].getSprite().getGlobalBounds();
+			//	enemyBoundShap.setSize(sf::Vector2f(enemyBound.width, enemyBound.height));
+			//	enemyBoundShap.setPosition(sf::Vector2f(enemyBound.left, enemyBound.top));
+			//	
+			//	if (bulletBoundShape.getGlobalBounds().intersects(enemyBoundShap.getGlobalBounds()))
+			//	{
+			//		bullets.erase(bullets.begin() + i);
+			//		boids.erase(boids.begin() + j);
+			//		break;
+			//	}
+			//}
 		}
 	}
 }

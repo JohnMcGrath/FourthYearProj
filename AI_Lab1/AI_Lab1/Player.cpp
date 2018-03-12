@@ -220,6 +220,17 @@ void Player::WrapAround(sf::Vector2f screenSize)
 	} 
 }
 
+void Player::checkWallCollision()
+{
+	for (int i = 0; i < m_copyOfWalls->size(); i++)
+	{
+		if (m_sprite.getGlobalBounds().intersects(m_copyOfWalls->at(i).getGlobalBounds()))
+		{
+			std::cout << "Touching Wall" << std::endl;
+		}
+	}
+}
+
 /// <summary>
 ///Update loop for the player
 /// <summary>
