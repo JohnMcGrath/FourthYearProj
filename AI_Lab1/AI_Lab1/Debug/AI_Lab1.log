@@ -1,10 +1,2 @@
-﻿  Game.cpp
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(11): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(34): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(122): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(368): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(493): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(500): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(507): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  AI_Lab1.vcxproj -> C:\Users\User\Desktop\4thYearProj\FourthYearProj\AI_Lab1\Debug\AI_Lab1.exe
+﻿  AI_Lab1.vcxproj -> C:\Users\User\Desktop\4thYearProj\FourthYearProj\AI_Lab1\Debug\AI_Lab1.exe
   AI_Lab1.vcxproj -> C:\Users\User\Desktop\4thYearProj\FourthYearProj\AI_Lab1\Debug\AI_Lab1.pdb (Partial PDB)

@@ -55,7 +55,7 @@ void Game::run()
 	m_player->setWallSprites(&m_mapLoader->getWallSprites());
 
 	spawnEnemies(m_mapLoader->getSpawnPoints());
-
+	score = enemies.size();
 	while (m_window.isOpen())
 	{
 		processEvents(); // as many as possible
