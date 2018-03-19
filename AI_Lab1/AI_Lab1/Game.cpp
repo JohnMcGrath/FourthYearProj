@@ -129,16 +129,12 @@ void Game::spawnEnemies(std::vector<sf::Vector2f> spawns)
 /// </summary>
 void Game::EnemyHandler()
 {
-	//if (spawnCounter < 40)
-	//{
-	//	spawnCounter++;
-	//}
-
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
 		enemies[i].Update(m_player->getPosition(), centrePoint, 1);
 
-		//Get player collision box
+
+		//Get player collision box for the bullets
 		playerBound = m_player->getSprite().getGlobalBounds();
 		playerBoundShap.setSize(sf::Vector2f(playerBound.width, playerBound.height));
 		playerBoundShap.setPosition(sf::Vector2f(playerBound.left, playerBound.top));
@@ -193,11 +189,10 @@ void Game::WorkerHandler()
 
 	for (size_t h = 0; h < m_mapLoader->getWallSprites().size(); h++)
 	{
+
 		//Only check walls within a distance of 200 pixels
 		if (m_player->Magnitude(playerBoundShap.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 200)
 		{
-			//If bullet hits wall
-
 			//WANT TO SMOOTHEN OUT COLLISION
 			if (playerBoundShap.getGlobalBounds().intersects(m_mapLoader->getWallSprites().at(h).getGlobalBounds()))
 			{
@@ -236,6 +231,8 @@ void Game::WorkerHandler()
 		workerBound = enemies[k].getSprite().getGlobalBounds();
 		workerBoundShape.setSize(sf::Vector2f(workerBound.width, workerBound.height));
 		workerBoundShape.setPosition(sf::Vector2f(workerBound.left, workerBound.top));
+
+		//See if enemy touches player
 		if (workerBoundShape.getGlobalBounds().intersects(playerBoundShap.getGlobalBounds()))
 		{
 			//If the player is not invincible
@@ -412,6 +409,7 @@ void Game::BulletHandler()
 					bullets.erase(bullets.begin() + i);
 					//If the enemy has taken 4 hits
 					enemies[k].addHitsTaken(1);
+					enemies[k].setState(EnemyState::Hostile);
 					if (enemies[k].getHitsTaken() >= 4)
 					{
 						m_soundManager->playSound("enemyDeath");

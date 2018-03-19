@@ -4,6 +4,12 @@
 #include "Bullet.h"
 #include "SoundManager.h"
 
+enum EnemyState
+{
+	Passive = 0,
+	Hostile = 1
+};
+
 class Bullet;
 
 class Enemy
@@ -89,6 +95,9 @@ public:
 	float Magnitude(sf::Vector2f v);
 	sf::Vector2f Normalise(sf::Vector2f v);
 
+	int getState() { return m_state; }
+	void setState(int newState) { m_state = newState; }
+
 private:
 	/// <summary>
 	/// Velocity, Position, Orientation and MaxSpeed
@@ -154,4 +163,6 @@ private:
 	SoundManager * m_soundManager;
 
 	std::vector<sf::Vector2f> m_patrolNodes;
+
+	int m_state = EnemyState::Passive;
 };

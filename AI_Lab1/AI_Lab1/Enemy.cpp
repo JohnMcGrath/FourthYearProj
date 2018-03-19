@@ -7,7 +7,17 @@ Enemy::Enemy() {}
 /// Handles Movement
 /// </summary>
 void Enemy::HandleInput(sf::Vector2f t, int typeOfMovement) {
-	if (Magnitude(t - m_position) < 500)
+	
+	if (Magnitude(t - m_position) < 350)
+	{
+		m_state = EnemyState::Hostile;
+	}
+	/*else
+	{
+		m_state = EnemyState::Passive;
+	}*/
+
+	if (m_state == EnemyState::Hostile)
 	{
 		if (typeOfMovement == 0)
 		{
@@ -17,7 +27,6 @@ void Enemy::HandleInput(sf::Vector2f t, int typeOfMovement) {
 		}
 
 		//Algorithm for seeking a target
-		//Used by Nest Spawned Enemies
 		if (typeOfMovement == 1)
 		{
 			float timeToTarget = 0.5f;
@@ -123,7 +132,7 @@ void Enemy::FireBullets(sf::Vector2f target)
 		bullets[i].m_shape.move(bullets[i].m_velocity);
 
 		//If the distance is great than 600, delete the bullet
-		if (Magnitude(bullets[i].m_shape.getPosition() - m_sprite.getPosition()) > 600)
+		if (Magnitude(bullets[i].m_shape.getPosition() - m_sprite.getPosition()) > 300)
 		{
 			bullets.erase(bullets.begin() + i);
 			break;
