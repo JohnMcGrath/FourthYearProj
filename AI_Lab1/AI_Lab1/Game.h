@@ -13,6 +13,7 @@
 #include <sstream>
 #include "MapLoader.h"
 #include "SoundManager.h"
+#include "FileWriter.h"
 
 class Player;
 class Enemy;
@@ -210,6 +211,7 @@ private:
 	MapLoader * m_mapLoader;
 
 	SoundManager * m_soundManager;
+	FileWriter * m_fileWriter;
 };
 
 #endif

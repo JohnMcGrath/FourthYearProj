@@ -152,4 +152,6 @@ private:
 	int posInSwarm;
 
 	SoundManager * m_soundManager;
+
+	std::vector<sf::Vector2f> m_patrolNodes;
 };

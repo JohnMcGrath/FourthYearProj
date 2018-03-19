@@ -1,10 +1,25 @@
 ﻿  Game.cpp
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(11): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(34): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(116): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(341): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(451): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(458): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(465): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(35): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(117): warning C4018: '<': signed/unsigned mismatch
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(342): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(452): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(459): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(466): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  Compiling...
+  main.cpp
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Enemy.cpp
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\enemy.cpp(50): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\enemy.cpp(142): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\enemy.cpp(180): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\enemy.cpp(181): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\enemy.cpp(183): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\enemy.cpp(193): warning C4305: 'argument': truncation from 'double' to 'float'
+  Generating Code...
   AI_Lab1.vcxproj -> C:\Users\User\Desktop\4thYearProj\FourthYearProj\AI_Lab1\Debug\AI_Lab1.exe
   AI_Lab1.vcxproj -> C:\Users\User\Desktop\4thYearProj\FourthYearProj\AI_Lab1\Debug\AI_Lab1.pdb (Partial PDB)
