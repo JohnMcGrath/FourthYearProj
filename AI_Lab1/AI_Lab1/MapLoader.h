@@ -7,7 +7,6 @@ class MapLoader
 public:
 	MapLoader();
 	void Init();
-	void Render();
 	void Draw(sf::RenderWindow* window);
 	std::vector<sf::Sprite> getSprites() { return m_sprites; }
 	std::vector<sf::Sprite> getWallSprites() { return m_wallSprites; }

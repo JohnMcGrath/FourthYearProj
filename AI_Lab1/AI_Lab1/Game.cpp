@@ -33,25 +33,16 @@ void Game::run()
 	//Truly randomise
 	srand(time(NULL));
 
+	//Initialise the plpayer with their default values
 	m_player->Initialise();
 	
 	//Sets the values for the view to follow the player
 	playerView.setSize(sf::Vector2f(VIEW_HEIGHT,VIEW_HEIGHT));
 
 	//Initialise the original object of each type of enemies
-
-	//Spawn From Nests
 	e1.Initialise(1, m_soundManager);
-	////Workers
-	//e2.Initialise(2);
-	////Boids
-	//e3.Initialise(3);
-	////Swarm
-	//e4.Initialise(4);
 
-	////Nest gets a random spawn location
-	//m_nestSprite.setPosition(sf::Vector2f(rand() % m_window.getSize().x, rand() % m_window.getSize().y));
-
+	//Player is given a reference to the walls for their collision method
 	m_player->setWallSprites(&m_mapLoader->getWallSprites());
 
 	spawnEnemies(m_mapLoader->getSpawnPoints());
@@ -79,6 +70,9 @@ void Game::ResizeView(const sf::RenderWindow& window, sf::View view)
 	playerView.setSize(sf::Vector2f(VIEW_HEIGHT * ratio, VIEW_HEIGHT*ratio));
 }
 
+/// <summary>
+/// Function to reset the game to replay
+/// </summary>
 void Game::RestartGame()
 {
 	enemies.clear();
@@ -131,10 +125,10 @@ void Game::spawnEnemies(std::vector<sf::Vector2f> spawns)
 /// </summary>
 void Game::EnemyHandler()
 {
-	if (spawnCounter < 40)
-	{
-		spawnCounter++;
-	}
+	//if (spawnCounter < 40)
+	//{
+	//	spawnCounter++;
+	//}
 
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
@@ -207,47 +201,28 @@ void Game::WorkerHandler()
 
 				if (tempPlayerPos.y < tempSpritePos.y)
 				{
-					m_player->setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y -= 5));
+					m_player->setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y -= 2));
 				}
 
 				else if (tempPlayerPos.y > tempSpritePos.y)
 				{
-					m_player->setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y += 5));
+					m_player->setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y += 2));
 				}
 
 				if (tempPlayerPos.x < tempSpritePos.x)
 				{
-					m_player->setPosition(sf::Vector2f(tempPlayerPos.x -= 5, tempPlayerPos.y));
+					m_player->setPosition(sf::Vector2f(tempPlayerPos.x -= 2, tempPlayerPos.y));
 				}
 
 				else if (tempPlayerPos.y > tempSpritePos.y)
 				{
-					m_player->setPosition(sf::Vector2f(tempPlayerPos.x += 5, tempPlayerPos.y));
+					m_player->setPosition(sf::Vector2f(tempPlayerPos.x += 2, tempPlayerPos.y));
 				}
 
 				std::cout << "Wall Hit" << std::endl;
 			}
 		}
 	}
-
-	//Update loop
-	//for (size_t j = 0; j < workersEns.size(); j++)
-	//{
-	//	workersEns[j].Update(m_player->getPosition(), centrePoint, 2);
-
-	//	//Get worker collision box
-	//	workerBound = workersEns[j].getSprite().getGlobalBounds();
-	//	workerBoundShape.setSize(sf::Vector2f(workerBound.width, workerBound.height));
-	//	workerBoundShape.setPosition(sf::Vector2f(workerBound.left, workerBound.top));
-
-	//	if (workerBoundShape.getGlobalBounds().intersects(playerBoundShap.getGlobalBounds()))
-	//	{
-	//		//delete the worker and gain a point
-	//		workersEns.erase(workersEns.begin() + j);
-	//		score++;
-	//		break;
-	//	}
-	//}
 
 	//Damage Player if enemy touches you
 	for (size_t k = 0; k < enemies.size(); k++)
@@ -258,8 +233,6 @@ void Game::WorkerHandler()
 		workerBoundShape.setPosition(sf::Vector2f(workerBound.left, workerBound.top));
 		if (workerBoundShape.getGlobalBounds().intersects(playerBoundShap.getGlobalBounds()))
 		{
-			/*enemies.erase(enemies.begin() + k);*/
-
 			//If the player is not invincible
 			if (!m_player->getInvincible())
 			{
@@ -444,21 +417,6 @@ void Game::BulletHandler()
 					}
 				}
 			}
-
-			//for (size_t j = 0; j < boids.size(); j++)
-			//{
-			//	//Gets the enemy boid's bounding box
-			//	enemyBound = boids[j].getSprite().getGlobalBounds();
-			//	enemyBoundShap.setSize(sf::Vector2f(enemyBound.width, enemyBound.height));
-			//	enemyBoundShap.setPosition(sf::Vector2f(enemyBound.left, enemyBound.top));
-			//	
-			//	if (bulletBoundShape.getGlobalBounds().intersects(enemyBoundShap.getGlobalBounds()))
-			//	{
-			//		bullets.erase(bullets.begin() + i);
-			//		boids.erase(boids.begin() + j);
-			//		break;
-			//	}
-			//}
 		}
 	}
 }
@@ -542,11 +500,11 @@ void Game::update(sf::Time t_deltaTime)
 {
 	if (m_gameState == GameState::Gameplaying)
 	{
-		if (boids.size() < 2)
-		{
-			e3.setPosition(sf::Vector2f(playerView.getSize().x - (rand() % 500), playerView.getSize().y - (rand() % 500)));
-			boids.push_back(e3);
-		}
+		//if (boids.size() < 2)
+		//{
+		//	e3.setPosition(sf::Vector2f(playerView.getSize().x - (rand() % 500), playerView.getSize().y - (rand() % 500)));
+		//	boids.push_back(e3);
+		//}
 
 		//Player
 		m_player->Update(centrePoint, m_controllerMode);
@@ -662,18 +620,6 @@ void Game::setupSprite()
 	m_winScreenSprite.setTexture(m_winScreenTexture);
 	m_winScreenSprite.setPosition(0, 0);
 
-	//if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\floorBoard.png"))
-	//{
-	//	// simple error message if previous call fails
-	//	std::cout << "problem loading logo" << std::endl;
-	//}
-	//m_logoSprite.setPosition(-200, - 200);
-	//m_logoSprite.setScale(sf::Vector2f(0.75, 0.75));
-	//m_logoTexture.setRepeated(true);
-	//m_logoSprite.setTexture(m_logoTexture);
-	//m_logoSprite.setTextureRect(sf::IntRect(0, 0, 3000, 3000));
-	//m_logoSprite.setPosition(-300, -300);
-
 	if (!m_scoreFont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf"))
 	{
 		std::cout << "problem loading font" << std::endl;
@@ -693,13 +639,6 @@ void Game::setupSprite()
 
 	m_controlModeText.setFillColor(sf::Color::White);
 	m_controlModeText.setFont(m_scoreFont);
-
-	//if (!m_nestTexture.loadFromFile("ASSETS\\IMAGES\\nest.png"))
-	//{
-	//	std::cout << "problem loading nest" << std::endl;
-	//}
-	//m_nestSprite.setTexture(m_nestTexture);
-	//m_nestSprite.setScale(sf::Vector2f(0.2, 0.2));
 
 	hudMapBack.setSize(sf::Vector2f(m_window.getView().getSize().x / 10, m_window.getView().getSize().y / 10));
 	hudMapBack.setFillColor(sf::Color::White);
