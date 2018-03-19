@@ -81,6 +81,7 @@ void Game::RestartGame()
 	m_player->setPosition(m_player->getStartingPosition());
 	spawnEnemies(m_mapLoader->getSpawnPoints());
 	score = enemies.size();
+	m_fileWriter->beginTimer();
 }
 
 /// <summary>
@@ -324,6 +325,7 @@ void Game::BulletHandler()
 		}
 		else
 		{
+			m_fileWriter->incrimentShotsTaken();
 			bulletCounter = 0;
 			b1.m_shape.setPosition(m_player->getPosition());
 			b1.m_velocity = normalisedAimDir * b1.m_maxSpeed;
@@ -399,6 +401,7 @@ void Game::BulletHandler()
 
 				if (bulletBoundShape.getGlobalBounds().intersects(enemyBoundShap.getGlobalBounds()))
 				{
+					m_fileWriter->incrimentShotsHit();
 					bullets.erase(bullets.begin() + i);
 					//If the enemy has taken 4 hits
 					enemies[k].addHitsTaken(1);
@@ -409,6 +412,8 @@ void Game::BulletHandler()
 						enemies.erase(enemies.begin() + k);
 						if (score <= 0)
 						{
+							m_fileWriter->endTimer();
+							m_fileWriter->writeResults();
 							m_gameState = GameState::WinScreen;
 						}
 					}
@@ -525,7 +530,6 @@ void Game::update(sf::Time t_deltaTime)
 	
 	else if ((m_gameState == GameState::DeathScreen) || (m_gameState == GameState::WinScreen))
 	{
-		std::cout << "You Died/Won" << std::endl;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
 			m_gameState = GameState::Gameplaying;
