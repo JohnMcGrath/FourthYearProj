@@ -6,20 +6,16 @@
 class FileWriter
 {
 public:
-	/*FileWriter()
-	{ 
-
-		m_file.open("tempTestFile.txt");
-		m_file << "This is a test";
-	}*/
 	void writeResults();
 	void incrimentShotsTaken() { m_shotsTaken++; };
 	void incrimentShotsHit() { m_shotsHit++; };
-	void incrimentdistanceTravelled();
+	void incrimentdistanceTravelled() { m_distanceTravelled++; }
+	void incrimentTimesOfDeath() { m_timesDied++; }
 	void startRecording();
 	void setcontrolModeCombo(std::string cmc) { m_controlModeCombo = cmc; }
 	void beginTimer() { m_timeStart = m_clock.getElapsedTime().asSeconds(); };
 	void endTimer() { m_timeEnd = m_clock.getElapsedTime().asSeconds(); }
+	void update(sf::Vector2f playVel);
 private:
 	const char * m_path = "ASSETS\\TEXTFILES";
 	std::ofstream m_file;
@@ -29,6 +25,7 @@ private:
 	int m_timeTaken = 0;
 	int m_timeStart = m_clock.getElapsedTime().asSeconds();
 	int m_timeEnd = m_clock.getElapsedTime().asSeconds();
+	int m_timesDied = 0;
 	sf::Clock m_clock;
-	std::string m_controlModeCombo;
+	std::string m_controlModeCombo = "Keyboard; Debug";
 };

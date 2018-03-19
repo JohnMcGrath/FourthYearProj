@@ -48,6 +48,9 @@ void Game::run()
 
 	spawnEnemies(m_mapLoader->getSpawnPoints());
 	score = enemies.size();
+	m_fileWriter->beginTimer();
+	m_fileWriter->startRecording();
+
 	while (m_window.isOpen())
 	{
 		processEvents(); // as many as possible
@@ -81,7 +84,6 @@ void Game::RestartGame()
 	m_player->setPosition(m_player->getStartingPosition());
 	spawnEnemies(m_mapLoader->getSpawnPoints());
 	score = enemies.size();
-	m_fileWriter->beginTimer();
 }
 
 /// <summary>
@@ -160,6 +162,7 @@ void Game::EnemyHandler()
 					m_player->reduceHealth(25);
 					if (m_player->getHealth() <= 0)
 					{
+						m_fileWriter->incrimentTimesOfDeath();
 						m_gameState = GameState::DeathScreen;
 					}
 				}
@@ -246,6 +249,7 @@ void Game::WorkerHandler()
 
 				if (m_player->getHealth() <= 0)
 				{
+					m_fileWriter->incrimentTimesOfDeath();
 					m_gameState = GameState::DeathScreen;
 				}
 			}
@@ -257,14 +261,17 @@ void Game::ChangeController()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
 	{
+		m_fileWriter->setcontrolModeCombo("Keyboard; Debug");
 		m_controllerMode = Controller::KeyboardContr;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
 	{
+		m_fileWriter->setcontrolModeCombo("Controller; Debug");
 		m_controllerMode = Controller::JoystickContr;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
 	{
+		m_fileWriter->setcontrolModeCombo("TouchScreen; Debug");
 		m_player->setOrientation(0);
 		m_controllerMode = Controller::TouchScreenContr;
 	}
@@ -412,7 +419,7 @@ void Game::BulletHandler()
 						enemies.erase(enemies.begin() + k);
 						if (score <= 0)
 						{
-							m_fileWriter->endTimer();
+							//m_fileWriter->endTimer();
 							m_fileWriter->writeResults();
 							m_gameState = GameState::WinScreen;
 						}
@@ -506,12 +513,6 @@ void Game::update(sf::Time t_deltaTime)
 {
 	if (m_gameState == GameState::Gameplaying)
 	{
-		//if (boids.size() < 2)
-		//{
-		//	e3.setPosition(sf::Vector2f(playerView.getSize().x - (rand() % 500), playerView.getSize().y - (rand() % 500)));
-		//	boids.push_back(e3);
-		//}
-
 		//Player
 		m_player->Update(centrePoint, m_controllerMode);
 		m_player->orientate(aimDir, m_controllerMode);
@@ -519,21 +520,27 @@ void Game::update(sf::Time t_deltaTime)
 		//View
 		playerView.setCenter(m_player->getPosition());
 
-		//m_soundManager->update();
-
 		HUDHandler();
 		BulletHandler();
 		EnemyHandler();
 		WorkerHandler();
 		ChangeController();
+
+		//Need to get distance travelled working correctly
+		m_fileWriter->update(m_player->getVelocity());
 	}
 	
 	else if ((m_gameState == GameState::DeathScreen) || (m_gameState == GameState::WinScreen))
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
+			if (m_gameState == GameState::WinScreen)
+			{
+				m_fileWriter->startRecording();
+			}
 			m_gameState = GameState::Gameplaying;
 			RestartGame();
+			
 		}
 	}
 	

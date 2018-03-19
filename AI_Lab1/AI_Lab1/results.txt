@@ -1,3 +1,16 @@
-Time Taken: -25044 seconds.
-Total Shots Hit: 28
-Total Shots Fired: 53
+Keyboard; Debug
+Time Taken: 42 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 41.
+Accuracy: 0%.
+Times Died: 0.
+Total Distance Traveled: 0.
+
+Keyboard; Debug
+Time Taken: 40 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 50.
+Accuracy: 0%.
+Times Died: 0.
+Total Distance Traveled: 0.
+

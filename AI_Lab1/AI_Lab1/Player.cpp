@@ -177,7 +177,6 @@ sf::Vector2f Player::Normalise(sf::Vector2f v)
 	}
 	else
 		return v;
-
 }
 
 /// <summary>

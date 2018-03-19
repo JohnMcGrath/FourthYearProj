@@ -1,21 +1,10 @@
-﻿  Game.cpp
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(30): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(11): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(35): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(118): warning C4018: '<': signed/unsigned mismatch
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(344): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(457): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(464): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\game.cpp(471): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  FileWriter.cpp
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(30): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(31): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+﻿  FileWriter.cpp
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(27): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.cpp(5): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  Generating Code...
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.cpp(50): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\user\desktop\4thyearproj\fourthyearproj\ai_lab1\ai_lab1\filewriter.cpp(51): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   AI_Lab1.vcxproj -> C:\Users\User\Desktop\4thYearProj\FourthYearProj\AI_Lab1\Debug\AI_Lab1.exe
   AI_Lab1.vcxproj -> C:\Users\User\Desktop\4thYearProj\FourthYearProj\AI_Lab1\Debug\AI_Lab1.pdb (Partial PDB)
