@@ -16,6 +16,13 @@ enum GameState
 	WinScreen = 2
 };
 
+enum GameMode
+{
+	Arcade = 0,
+	Simulation = 1,
+	StrawMan = 2
+};
+
 class Player
 {
 public:

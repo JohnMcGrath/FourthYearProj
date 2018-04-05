@@ -98,6 +98,9 @@ public:
 	int getState() { return m_state; }
 	void setState(int newState) { m_state = newState; }
 
+	sf::Vector2f nearestTargetNode(sf::Vector2f player, std::vector<sf::Vector2f>* nodes);
+	sf::Vector2f goToNextNode(sf::Vector2f player);
+
 private:
 	/// <summary>
 	/// Velocity, Position, Orientation and MaxSpeed

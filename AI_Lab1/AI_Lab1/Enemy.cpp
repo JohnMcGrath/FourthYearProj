@@ -99,6 +99,108 @@ void Enemy::HandleInput(sf::Vector2f t, int typeOfMovement) {
 
 }
 
+sf::Vector2f Enemy::goToNextNode(sf::Vector2f player)
+{
+	int ans = 100000;
+	int ansNode = 0;
+
+	int tempMagEnNode = 0;
+	int tempMagPlNode = 0;
+
+	for (size_t i = 0; i < m_patrolNodes.size(); i++)
+	{
+		tempMagEnNode = Magnitude(m_patrolNodes.at(i) - m_position);
+		tempMagPlNode = Magnitude(m_patrolNodes.at(i) - player);
+
+		if (tempMagEnNode < 0)
+		{
+			tempMagEnNode = tempMagEnNode * -1;
+		}
+
+		if (tempMagPlNode < 0)
+		{
+			tempMagPlNode = tempMagPlNode * -1;
+		}
+
+		if ((tempMagEnNode + tempMagPlNode) < ans)
+		{
+			ans = tempMagEnNode + tempMagPlNode;
+			ansNode = i;
+		}
+	}
+
+	//Position of the node
+	return m_patrolNodes.at(ansNode);
+}
+
+sf::Vector2f Enemy::nearestTargetNode(sf::Vector2f player, std::vector<sf::Vector2f>* nodes)
+{
+	int searchQuadrant = 0;
+	m_patrolNodes.clear(); //possibly comment out
+
+	/*
+	0 | 1
+	-----
+	2 | 3
+	*/
+
+	//Check which quadrant the player is in relative to the enemy
+	if (m_position.y <= player.y) //if enemy above player
+	{
+		if (m_position.x <= player.x) //if enemy to the left
+		{
+			searchQuadrant = 3;
+		}
+		else //if enemy to the right
+		{
+			searchQuadrant = 2;
+		}
+	}
+	else //if the enemy below the player
+	{
+		if (m_position.x <= player.x) //if enemy to the left
+		{
+			searchQuadrant = 1;
+		}
+		else //if enemy to the right
+		{
+			searchQuadrant = 0;
+		}
+	}
+
+	for (size_t i = 0; i < nodes->size(); i++)
+	{
+		if (searchQuadrant == 0)
+		{
+			if ((nodes->at(i).y < m_position.y) && (nodes->at(i).x < m_position.x))
+			{
+				m_patrolNodes.push_back(nodes->at(i));
+			}
+		}
+		else if (searchQuadrant == 1)
+		{
+			if ((nodes->at(i).y < m_position.y) && (nodes->at(i).x > m_position.x))
+			{
+				m_patrolNodes.push_back(nodes->at(i));
+			}
+		}
+		else if (searchQuadrant == 2)
+		{
+			if ((nodes->at(i).y >= m_position.y) && (nodes->at(i).x < m_position.x))
+			{
+				m_patrolNodes.push_back(nodes->at(i));
+			}
+		}
+		else //3
+		{
+			if ((nodes->at(i).y >= m_position.y) && (nodes->at(i).x > m_position.x))
+			{
+				m_patrolNodes.push_back(nodes->at(i));
+			}
+		}
+	}
+}
+
 /// <summary>
 /// Fire Bullets at target position
 /// </summary>
