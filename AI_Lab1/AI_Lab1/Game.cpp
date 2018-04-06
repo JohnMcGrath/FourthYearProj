@@ -131,7 +131,7 @@ void Game::EnemyHandler()
 {
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
-		enemies[i].Update(m_player->getPosition(), centrePoint, 1);
+		enemies[i].Update(m_player->getPosition(), centrePoint, 1,m_mapLoader->getNodes());
 
 
 		//Get player collision box for the bullets
@@ -189,6 +189,47 @@ void Game::WorkerHandler()
 
 	for (size_t h = 0; h < m_mapLoader->getWallSprites().size(); h++)
 	{
+		/*
+		for (size_t k = 0; k < enemies.size(); k++)
+		{
+			//Same variables are reused
+			workerBound = enemies[k].getSprite().getGlobalBounds();
+			workerBoundShape.setSize(sf::Vector2f(workerBound.width, workerBound.height));
+			workerBoundShape.setPosition(sf::Vector2f(workerBound.left, workerBound.top));
+
+			if (m_player->Magnitude(workerBoundShape.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 200)
+			{
+				if (workerBoundShape.getGlobalBounds().intersects(m_mapLoader->getWallSprites().at(h).getGlobalBounds()))
+				{
+					sf::Vector2f tempPlayerPos = enemies[k].getPosition();
+					sf::Vector2f tempSpritePos = m_mapLoader->getWallSprites().at(h).getPosition();
+
+					if (tempPlayerPos.y < tempSpritePos.y)
+					{
+						enemies[k].setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y -= 2));
+					}
+
+					else if (tempPlayerPos.y > tempSpritePos.y)
+					{
+						enemies[k].setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y += 2));
+					}
+
+					if (tempPlayerPos.x < tempSpritePos.x)
+					{
+						enemies[k].setPosition(sf::Vector2f(tempPlayerPos.x -= 2, tempPlayerPos.y));
+					}
+
+					else if (tempPlayerPos.y > tempSpritePos.y)
+					{
+						enemies[k].setPosition(sf::Vector2f(tempPlayerPos.x += 2, tempPlayerPos.y));
+					}
+
+					std::cout << "Enemy Wall Hit" << std::endl;
+				}
+			}
+		}
+		*/
+
 
 		//Only check walls within a distance of 200 pixels
 		if (m_player->Magnitude(playerBoundShap.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 200)

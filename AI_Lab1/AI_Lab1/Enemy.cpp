@@ -6,7 +6,7 @@ Enemy::Enemy() {}
 /// <summary>
 /// Handles Movement
 /// </summary>
-void Enemy::HandleInput(sf::Vector2f t, int typeOfMovement) {
+void Enemy::HandleInput(sf::Vector2f t, int typeOfMovement, std::vector<sf::Vector2f>* nodes) {
 	
 	if (Magnitude(t - m_position) < 350)
 	{
@@ -30,7 +30,20 @@ void Enemy::HandleInput(sf::Vector2f t, int typeOfMovement) {
 		if (typeOfMovement == 1)
 		{
 			float timeToTarget = 0.5f;
-			m_velocity = t - m_position;
+			//m_velocity = t - m_position;
+
+			if (Magnitude(t - m_position) < 200)
+			{
+				m_velocity = t - m_position;
+			}
+			else
+			{
+				m_velocity = nearestTargetNode(t, nodes) - m_position;
+			}
+			
+
+
+
 
 			m_velocity *= timeToTarget;
 			float l = Magnitude(m_velocity);
@@ -112,15 +125,15 @@ sf::Vector2f Enemy::goToNextNode(sf::Vector2f player)
 		tempMagEnNode = Magnitude(m_patrolNodes.at(i) - m_position);
 		tempMagPlNode = Magnitude(m_patrolNodes.at(i) - player);
 
-		if (tempMagEnNode < 0)
+		/*if (tempMagEnNode < 0)
 		{
 			tempMagEnNode = tempMagEnNode * -1;
-		}
+		}*/
 
-		if (tempMagPlNode < 0)
+		/*if (tempMagPlNode < 0)
 		{
 			tempMagPlNode = tempMagPlNode * -1;
-		}
+		}*/
 
 		if ((tempMagEnNode + tempMagPlNode) < ans)
 		{
@@ -145,9 +158,9 @@ sf::Vector2f Enemy::nearestTargetNode(sf::Vector2f player, std::vector<sf::Vecto
 	*/
 
 	//Check which quadrant the player is in relative to the enemy
-	if (m_position.y <= player.y) //if enemy above player
+	if (m_position.y < player.y) //if enemy above player
 	{
-		if (m_position.x <= player.x) //if enemy to the left
+		if (m_position.x < player.x) //if enemy to the left
 		{
 			searchQuadrant = 3;
 		}
@@ -158,7 +171,7 @@ sf::Vector2f Enemy::nearestTargetNode(sf::Vector2f player, std::vector<sf::Vecto
 	}
 	else //if the enemy below the player
 	{
-		if (m_position.x <= player.x) //if enemy to the left
+		if (m_position.x < player.x) //if enemy to the left
 		{
 			searchQuadrant = 1;
 		}
@@ -186,19 +199,20 @@ sf::Vector2f Enemy::nearestTargetNode(sf::Vector2f player, std::vector<sf::Vecto
 		}
 		else if (searchQuadrant == 2)
 		{
-			if ((nodes->at(i).y >= m_position.y) && (nodes->at(i).x < m_position.x))
+			if ((nodes->at(i).y > m_position.y) && (nodes->at(i).x < m_position.x))
 			{
 				m_patrolNodes.push_back(nodes->at(i));
 			}
 		}
 		else //3
 		{
-			if ((nodes->at(i).y >= m_position.y) && (nodes->at(i).x > m_position.x))
+			if ((nodes->at(i).y > m_position.y) && (nodes->at(i).x > m_position.x))
 			{
 				m_patrolNodes.push_back(nodes->at(i));
 			}
 		}
 	}
+	return goToNextNode(player);
 }
 
 /// <summary>
@@ -327,11 +341,11 @@ sf::RectangleShape Enemy::getCollisionBox()
 /// <summary>
 /// Update Loop
 /// </summary>
-void Enemy::Update(sf::Vector2f t, sf::Vector2f screenSize, int typeOfMovement) {
+void Enemy::Update(sf::Vector2f t, sf::Vector2f screenSize, int typeOfMovement, std::vector<sf::Vector2f>* nodes) {
 	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
 	m_sprite.setPosition(m_position);
 	m_orientation = orientate();
 	m_sprite.setRotation(m_orientation);
-	HandleInput(t, typeOfMovement);
+	HandleInput(t, typeOfMovement, nodes);
 	m_position = m_position += m_velocity;
 }

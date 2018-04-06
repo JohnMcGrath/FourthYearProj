@@ -48,7 +48,7 @@ public:
 	/// <summary>
 	/// Handles enemy movement
 	/// <summary>
-	void HandleInput(sf::Vector2f t, int typeOfMovement);
+	void HandleInput(sf::Vector2f t, int typeOfMovement, std::vector<sf::Vector2f>* nodes);
 
 	/// <summary>
 	///Initialisation
@@ -58,7 +58,7 @@ public:
 	/// <summary>
 	///Update Loop
 	/// <summary>
-	void Update(sf::Vector2f t, sf::Vector2f screenSize, int typeOfMovement);
+	void Update(sf::Vector2f t, sf::Vector2f screenSize, int typeOfMovement, std::vector<sf::Vector2f>* nodes);
 
 	/// <summary>
 	/// Getters

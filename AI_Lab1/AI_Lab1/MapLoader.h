@@ -11,11 +11,12 @@ public:
 	std::vector<sf::Sprite> getSprites() { return m_sprites; }
 	std::vector<sf::Sprite> getWallSprites() { return m_wallSprites; }
 	std::vector<sf::Vector2f> getSpawnPoints() { return m_spawnPoints; }
+	std::vector<sf::Vector2f>* getNodes() { return &m_nodes; }
 
 private:
 	 std::vector<int> m_row0 = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
-	 std::vector<int> m_row1 = { 1,0,0,0,0,0,0,0,0,0,2,1,0,0,1 };
-	 std::vector<int> m_row2 = { 1,0,0,0,0,0,0,0,0,0,2,1,0,0,1 };
+	 std::vector<int> m_row1 = { 1,0,0,0,0,0,0,0,0,2,2,1,0,0,1 };
+	 std::vector<int> m_row2 = { 1,0,0,0,0,0,0,0,0,0,0,1,0,0,1 };
 	 std::vector<int> m_row3 = { 1,0,0,1,1,1,1,1,1,1,1,1,0,0,1 };
 	 std::vector<int> m_row4 = { 1,0,0,1,0,0,0,0,0,0,0,0,0,2,1 };
 	 std::vector<int> m_row5 = { 1,0,0,1,0,0,0,0,0,0,0,0,0,2,1 };
