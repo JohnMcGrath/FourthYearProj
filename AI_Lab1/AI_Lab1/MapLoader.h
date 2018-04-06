@@ -34,6 +34,10 @@ private:
 	sf::Sprite m_wallSprite;
 	sf::Sprite m_tempSprite;
 	sf::Texture m_wallTexture;
+
+	sf::Sprite m_roofSprite;
+	sf::Texture m_roofTexture;
+
 	sf::Sprite m_floorSprite;
 	sf::Texture m_floorTexture;
 	sf::Vector2f tempVec;

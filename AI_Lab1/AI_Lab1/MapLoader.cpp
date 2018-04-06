@@ -24,12 +24,20 @@ MapLoader::MapLoader()
 
 void MapLoader::Init()
 {
-	if (!m_wallTexture.loadFromFile("ASSETS\\IMAGES\\wallSprite.png"))
+	if (!m_wallTexture.loadFromFile("ASSETS\\IMAGES\\brickWallSprite.png"))
 	{
 		std::cout << "Error loading wallTexture" << std::endl;
 	}
 
 	m_wallSprite.setTexture(m_wallTexture);
+
+	if (!m_roofTexture.loadFromFile("ASSETS\\IMAGES\\brickWallTopSprite.png"))
+	{
+		std::cout << "Error loading roofTexture" << std::endl;
+	}
+
+	m_roofSprite.setTexture(m_roofTexture);
+
 	if (!m_floorTexture.loadFromFile("ASSETS\\IMAGES\\floorBoard.png"))
 	{
 		std::cout << "Error loading floorTexture" << std::endl;
@@ -52,6 +60,17 @@ void MapLoader::Init()
 				m_tempSprite.setScale(sf::Vector2f(0.5f,0.5f));
 				m_wallSprites.push_back(m_tempSprite);
 			}
+
+			else if (m_rows.at(i).at(j) == 3) //top tiles
+			{
+				//Draw a wall
+				std::cout << "||";
+				m_tempSprite.setPosition(sf::Vector2f(128 * j, 128 * i));
+				m_tempSprite.setTexture(m_roofTexture);
+				m_tempSprite.setScale(sf::Vector2f(0.5f, 0.5f));
+				m_wallSprites.push_back(m_tempSprite);
+			}
+
 			else if ((m_rows.at(i).at(j) == 0)||(m_rows.at(i).at(j) == 2))
 			{
 				//Draw the floor
