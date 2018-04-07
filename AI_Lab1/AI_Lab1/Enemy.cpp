@@ -36,13 +36,13 @@ void Enemy::HandleInput(sf::Vector2f t, int typeOfMovement, std::vector<sf::Vect
 			{
 				m_velocity = t - m_position;
 			}
+
+			//Add in thing to stop changing node until correct one is picked
 			else
 			{
 				m_velocity = nearestTargetNode(t, nodes) - m_position;
 			}
 			
-
-
 
 
 			m_velocity *= timeToTarget;

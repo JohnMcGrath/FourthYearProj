@@ -57,6 +57,8 @@ public:
 	int getHealth() { return m_health; }
 	bool getInvincible() { return invincile; }
 
+	float acceleration();
+
 	/// <summary>
 	///Setters
 	/// <summary>
@@ -106,6 +108,8 @@ public:
 
 	sf::Vector2f getStartingPosition() { return m_startingPosition; }
 
+	float getCurrentSpeed() { return m_currentSpeed; }
+
 private:
 	/// <summary>
 	///Vector used when a small temporary value is needed
@@ -136,6 +140,12 @@ private:
 	///Max speed
 	/// <summary>
 	float m_maxSpeed = 2.5f;
+
+	float m_currentSpeed = 0;
+
+	int ans = 0;
+
+	float m_acceleration = 1.2;
 
 	/// <summary>
 	///Sprite and Texture

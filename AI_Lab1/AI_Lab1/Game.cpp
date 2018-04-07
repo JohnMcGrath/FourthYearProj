@@ -373,6 +373,24 @@ void Game::BulletHandler()
 			m_fileWriter->incrimentShotsTaken();
 			bulletCounter = 0;
 			b1.m_shape.setPosition(m_player->getPosition());
+
+			//if the player is moving
+			if (m_player->getCurrentSpeed() != 0)
+			{
+				//Add spread to the weapons shot
+				int ans = rand() % 2;
+				std::cout << ans << std::endl;
+				if (ans == 1)
+				{
+					normalisedAimDir = normalisedAimDir + sf::Vector2f((rand() % 3)*0.1, (rand() % 3)*0.1);
+				}
+
+				else
+				{
+					normalisedAimDir = normalisedAimDir + sf::Vector2f((rand() % 3)*-0.1, (rand() % 3)*-0.1);
+				}
+			}
+
 			b1.m_velocity = normalisedAimDir * b1.m_maxSpeed;
 			m_soundManager->playSound("playerGun");
 			bullets.push_back(Bullet(b1));
@@ -385,7 +403,6 @@ void Game::BulletHandler()
 	if (m_controllerMode == Controller::KeyboardContr)
 	{
 		cursorPos = (sf::Vector2f)sf::Mouse::getPosition(m_window);
-
 		aimDir = cursorPos - sf::Vector2f(m_window.getSize().x / 2, m_window.getSize().y / 2);
 	}
 
