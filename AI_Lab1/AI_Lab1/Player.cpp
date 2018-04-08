@@ -27,26 +27,42 @@ void Player::orientate(sf::Vector2f target, int controlMode)
 
 float Player::acceleration()
 {
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
-		sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
-		sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
-		sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
-		sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) != 0 ||
-		sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) != 0)
+	if (m_gameMode == GameMode::Arcade)
 	{
-		std::cout << "Accel" << std::endl;*/
-
 		if (m_currentSpeed <= m_maxSpeed)
 		{
+			m_acceleration = 1.2;
+
 			if (m_currentSpeed == 0)
 			{
 				m_currentSpeed = 0.4f;
 			}
 			m_currentSpeed *= m_acceleration;
+			std::cout << "Speed: " << m_currentSpeed << std::endl;
 		}
-	//}
+	}
+		
+	else if (m_gameMode == GameMode::Simulation)
+	{
+		if (m_currentSpeed <= m_maxSpeed)
+		{
+			m_acceleration = 0.1f;
+			if (m_currentSpeed == 0)
+			{
+				m_currentSpeed = 0.2f;
+			}
+			m_currentSpeed += m_acceleration;
+			std::cout << "Speed: " << m_currentSpeed << std::endl;
+		}
+	}
 
-	std::cout << "Speed: " << m_currentSpeed << std::endl;
+	else
+	{
+		m_currentSpeed = m_maxSpeed;
+		return m_maxSpeed;
+	}
+
+	
 	return m_currentSpeed;
 }
 
@@ -63,6 +79,14 @@ void Player::HandleInput(int controlMode)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
+			if (!m_KeyboardPressOnceW)
+			{
+				std::cout << "W" << std::endl;
+				m_currentSpeed = 0;
+			}
+
+			m_KeyboardPressOnceW = true;
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
 				m_position = m_position + sf::Vector2f(0, -acceleration() / 1.5);
@@ -73,8 +97,21 @@ void Player::HandleInput(int controlMode)
 			}
 		}
 
+		else
+		{
+			m_KeyboardPressOnceW = false;
+		}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
+			if (!m_KeyboardPressOnceS)
+			{
+				std::cout << "S" << std::endl;
+				m_currentSpeed = 0;
+			}
+
+			m_KeyboardPressOnceS = true;
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
 				m_position = m_position + sf::Vector2f(0, acceleration() / 1.5);
@@ -85,8 +122,20 @@ void Player::HandleInput(int controlMode)
 			}
 		}
 
+		else
+		{
+			m_KeyboardPressOnceS;
+		}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
+			if (!m_KeyboardPressOnceA)
+			{
+				std::cout << "A" << std::endl;
+				m_currentSpeed = 0;
+			}
+			m_KeyboardPressOnceA = true;
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
 				m_position = m_position + sf::Vector2f(-acceleration() / 1.5, 0);
@@ -96,8 +145,22 @@ void Player::HandleInput(int controlMode)
 				m_position = m_position + sf::Vector2f(-acceleration(), 0);
 			}
 		}
+
+		else
+		{
+			m_KeyboardPressOnceA = false;
+		}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
+			if (!m_KeyboardPressOnceD)
+			{
+				std::cout << "D" << std::endl;
+				m_currentSpeed = 0;
+			}
+
+			m_KeyboardPressOnceD = true;
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
 				m_position = m_position + sf::Vector2f(acceleration() / 1.5, 0);
@@ -106,6 +169,10 @@ void Player::HandleInput(int controlMode)
 			{
 				m_position = m_position + sf::Vector2f(acceleration(), 0);
 			}
+		}
+		else
+		{
+			m_KeyboardPressOnceD = false;
 		}
 
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S)

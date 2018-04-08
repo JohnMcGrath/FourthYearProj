@@ -110,6 +110,8 @@ public:
 
 	float getCurrentSpeed() { return m_currentSpeed; }
 
+	void setGameMode(int gameMode) { m_gameMode = gameMode; }
+
 private:
 	/// <summary>
 	///Vector used when a small temporary value is needed
@@ -173,4 +175,11 @@ private:
 	sf::Vector2f m_previousPos;
 
 	sf::Vector2f m_startingPosition{ 300, 300 };
+
+	int m_gameMode = GameMode::Simulation;
+
+	bool m_KeyboardPressOnceW = false;
+	bool m_KeyboardPressOnceA = false;
+	bool m_KeyboardPressOnceS = false;
+	bool m_KeyboardPressOnceD = false;
 };

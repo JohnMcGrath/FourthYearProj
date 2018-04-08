@@ -207,6 +207,7 @@ private:
 
 	int m_controllerMode = Controller::KeyboardContr;
 	int m_gameState = GameState::Gameplaying;
+	int m_gameMode = GameMode::Arcade;
 
 	MapLoader * m_mapLoader;
 

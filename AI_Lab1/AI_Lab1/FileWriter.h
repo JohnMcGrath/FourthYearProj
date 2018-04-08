@@ -13,6 +13,7 @@ public:
 	void incrimentTimesOfDeath() { m_timesDied++; }
 	void startRecording();
 	void setcontrolModeCombo(std::string cmc) { m_controlModeCombo = cmc; }
+	void setMode(std::string m) { m_mode = m; }
 	void beginTimer() { m_timeStart = m_clock.getElapsedTime().asSeconds(); };
 	void endTimer() { m_timeEnd = m_clock.getElapsedTime().asSeconds(); }
 	void update(sf::Vector2f playVel);
@@ -27,5 +28,6 @@ private:
 	int m_timeEnd = m_clock.getElapsedTime().asSeconds();
 	int m_timesDied = 0;
 	sf::Clock m_clock;
-	std::string m_controlModeCombo = "Keyboard; Debug";
+	std::string m_controlModeCombo = "Keyboard; ";
+	std::string m_mode = "Arcade";
 };

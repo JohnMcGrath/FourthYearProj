@@ -9,6 +9,7 @@ void FileWriter::writeResults()
 	std::cout << "Time End: " << m_timeEnd << std::endl;
 
 	m_file << m_controlModeCombo;
+	m_file << m_mode;
 	m_file << "\n";
 
 	int tempTime = m_timeEnd - m_timeStart;

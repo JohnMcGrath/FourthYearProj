@@ -299,19 +299,38 @@ void Game::ChangeController()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
 	{
-		m_fileWriter->setcontrolModeCombo("Keyboard; Debug");
+		m_fileWriter->setcontrolModeCombo("Keyboard; ");
 		m_controllerMode = Controller::KeyboardContr;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
 	{
-		m_fileWriter->setcontrolModeCombo("Controller; Debug");
+		m_fileWriter->setcontrolModeCombo("Controller; ");
 		m_controllerMode = Controller::JoystickContr;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
 	{
-		m_fileWriter->setcontrolModeCombo("TouchScreen; Debug");
+		m_fileWriter->setcontrolModeCombo("TouchScreen; ");
 		m_player->setOrientation(0);
 		m_controllerMode = Controller::TouchScreenContr;
+	}
+
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num7))
+	{
+		m_gameMode = GameMode::Arcade;
+		m_player->setGameMode(m_gameMode);
+		m_fileWriter->setMode("Arcade");
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8))
+	{
+		m_gameMode = GameMode::Simulation;
+		m_player->setGameMode(m_gameMode);
+		m_fileWriter->setMode("Simulation");
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num9))
+	{
+		m_gameMode = GameMode::StrawMan;
+		m_player->setGameMode(m_gameMode);
+		m_fileWriter->setMode("Strawman");
 	}
 }
 
@@ -640,9 +659,6 @@ void Game::render()
 	m_window.draw(m_healthPreText);
 	m_window.draw(m_controlModeText);
 	m_window.draw(m_controlModePreText);
-
-	/*m_window.draw(hudMapBack);
-	m_window.draw(hudPlayerMap);*/
 	
 	if (m_gameState == GameState::DeathScreen)
 	{

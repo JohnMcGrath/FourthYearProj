@@ -1,16 +1,14 @@
-Keyboard; Debug
-Time Taken: 42 seconds.
+Keyboard; Arcade
+Time Taken: 41 seconds.
 Total Shots Hit: 28.
-Total Shots Fired: 41.
-Accuracy: 0%.
+Total Shots Fired: 46.
 Times Died: 0.
 Total Distance Traveled: 0.
 
-Keyboard; Debug
-Time Taken: 40 seconds.
+Keyboard; Strawman
+Time Taken: 47 seconds.
 Total Shots Hit: 28.
-Total Shots Fired: 50.
-Accuracy: 0%.
+Total Shots Fired: 47.
 Times Died: 0.
 Total Distance Traveled: 0.
 
