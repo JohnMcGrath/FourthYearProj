@@ -11,7 +11,7 @@ void Player::steerPlayer(sf::Vector2f t)
 {
 	m_velocity = (m_position + t) - m_position;
 	m_velocity = Normalise(m_velocity);
-	m_velocity * m_maxSpeed;
+	m_velocity * acceleration();
 }
 
 /// <summary>
@@ -27,14 +27,14 @@ void Player::orientate(sf::Vector2f target, int controlMode)
 
 float Player::acceleration()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
 		sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
 		sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) != 0 ||
 		sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) != 0)
 	{
-		std::cout << "Accel" << std::endl;
+		std::cout << "Accel" << std::endl;*/
 
 		if (m_currentSpeed <= m_maxSpeed)
 		{
@@ -44,8 +44,9 @@ float Player::acceleration()
 			}
 			m_currentSpeed *= m_acceleration;
 		}
-	}
+	//}
 
+	std::cout << "Speed: " << m_currentSpeed << std::endl;
 	return m_currentSpeed;
 }
 
@@ -128,6 +129,13 @@ void Player::HandleInput(int controlMode)
 		{
 			m_position = m_position += sf::Vector2f(0, acceleration() * (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) / 100));
 		}
+
+		if ((tempVec.x < 5) && (tempVec.x > -5) &&
+			(tempVec.y < 5) && (tempVec.y > -5))
+		{
+			std::cout << "Decel" << std::endl;
+			m_currentSpeed = 0;
+		}
 	}
 
 	if (controlMode == 2)
@@ -167,6 +175,7 @@ void Player::HandleInput(int controlMode)
 		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
 			setVelocity(sf::Vector2f(0, 0));
+			m_currentSpeed = 0;
 		}
 	}
 	
