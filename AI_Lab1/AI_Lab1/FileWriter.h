@@ -16,7 +16,8 @@ public:
 	void setMode(std::string m) { m_mode = m; }
 	void beginTimer() { m_timeStart = m_clock.getElapsedTime().asSeconds(); };
 	void endTimer() { m_timeEnd = m_clock.getElapsedTime().asSeconds(); }
-	void update(sf::Vector2f playVel);
+	void setEndHealth(int i) { m_endHealth = i; }
+	void update(float playVel);
 private:
 	const char * m_path = "ASSETS\\TEXTFILES";
 	std::ofstream m_file;
@@ -27,6 +28,7 @@ private:
 	int m_timeStart = m_clock.getElapsedTime().asSeconds();
 	int m_timeEnd = m_clock.getElapsedTime().asSeconds();
 	int m_timesDied = 0;
+	int m_endHealth = 0;
 	sf::Clock m_clock;
 	std::string m_controlModeCombo = "Keyboard; ";
 	std::string m_mode = "Arcade";

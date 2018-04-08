@@ -383,7 +383,7 @@ void Game::BulletHandler()
 	if (m_isFiring)
 	{
 		//timer
-		if (bulletCounter < 10)
+		if (bulletCounter < 20)
 		{
 			bulletCounter++;
 		}
@@ -445,7 +445,7 @@ void Game::BulletHandler()
 		bullets[i].m_shape.move(bullets[i].m_velocity);
 
 		//If the bullet is a distance of 2000 or more pixels from the player, the shot is deleted
-		if (m_player->Magnitude(bullets[i].m_shape.getPosition() - m_player->getPosition()) > 600)
+		if (m_player->Magnitude(bullets[i].m_shape.getPosition() - m_player->getPosition()) > 350)
 		{
 			bullets.erase(bullets.begin() + i);
 			//break;
@@ -495,6 +495,7 @@ void Game::BulletHandler()
 						if (score <= 0)
 						{
 							//m_fileWriter->endTimer();
+							m_fileWriter->setEndHealth(m_player->getHealth());
 							m_fileWriter->writeResults();
 							m_gameState = GameState::WinScreen;
 						}
@@ -567,11 +568,6 @@ void Game::HUDHandler()
 	m_controlModeText.setString(cm);
 	m_controlModePreText.setString("Control Mode: ");
 
-	
-
-	/*hudMapBack.setPosition(m_player->getPosition().x - 500, m_player->getPosition().y - 350);
-	hudPlayerMap.setPosition(sf::Vector2f(hudMapBack.getPosition().x + (hudMapBack.getSize().x / 2), hudMapBack.getPosition().y + (hudMapBack.getSize().y / 2)));
-*/
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
 		hudEnemyMap.setPosition(sf::Vector2f(hudMapBack.getPosition().x + (enemies[i].getPosition().x / 8), hudMapBack.getPosition().y + (enemies[i].getPosition().y / 8)));
@@ -602,7 +598,7 @@ void Game::update(sf::Time t_deltaTime)
 		ChangeController();
 
 		//Need to get distance travelled working correctly
-		m_fileWriter->update(m_player->getVelocity());
+		m_fileWriter->update(m_player->getCurrentSpeed());
 	}
 	
 	else if ((m_gameState == GameState::DeathScreen) || (m_gameState == GameState::WinScreen))

@@ -25,13 +25,12 @@ void FileWriter::writeResults()
 	m_file << m_shotsTaken;
 	m_file << ".\n";
 
-	//m_file << "Accuracy: ";
-	////float tempAccuracy = ((m_shotsHit / m_shotsTaken) * 100);
-	//m_file << ((m_shotsHit / m_shotsTaken) * 100);
-	//m_file << "%.\n";
-
 	m_file << "Times Died: ";
 	m_file << m_timesDied;
+	m_file << ".\n";
+
+	m_file << "Remaining Health: ";
+	m_file << m_endHealth;
 	m_file << ".\n";
 
 	m_file << "Total Distance Traveled: ";
@@ -52,9 +51,9 @@ void FileWriter::startRecording()
 	m_timeEnd = m_clock.getElapsedTime().asSeconds();
 }
 
-void FileWriter::update(sf::Vector2f playVel)
+void FileWriter::update(float playVel)
 {
-	if (playVel != sf::Vector2f(0, 0))
+	if (playVel != 0)
 	{
 		incrimentdistanceTravelled();
 	}

@@ -12,3 +12,35 @@ Total Shots Fired: 47.
 Times Died: 0.
 Total Distance Traveled: 0.
 
+Keyboard; Arcade
+Time Taken: 52 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 45.
+Accuracy: 0%.
+Times Died: 0.
+Total Distance Traveled: 2562.
+
+Keyboard; Simulation
+Time Taken: 48 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 31.
+Accuracy: 0%.
+Times Died: 0.
+Total Distance Traveled: 2092.
+
+Keyboard; Arcade
+Time Taken: 37 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 42.
+Times Died: 0.
+Remaining Health: 100.
+Total Distance Traveled: 1743.
+
+Keyboard; Arcade
+Time Taken: 42 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 45.
+Times Died: 0.
+Remaining Health: 75.
+Total Distance Traveled: 2041.
+

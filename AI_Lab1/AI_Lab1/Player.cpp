@@ -190,11 +190,30 @@ void Player::HandleInput(int controlMode)
 
 		if ((tempVec.x > 5) || (tempVec.x < -5))
 		{
+			if (!m_JoystickLeftMovedOnce)
+			{
+				m_currentSpeed = 0;
+			}
+			m_JoystickLeftMovedOnce = true;
 			m_position = m_position += (sf::Vector2f(acceleration() * (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) / 100), 0));
 		}
+		else
+		{
+			m_JoystickLeftMovedOnce = false;
+		}
+
 		if ((tempVec.y > 5) || (tempVec.y < -5))
 		{
+			if (!m_JoystickRightMovedOnce)
+			{
+				m_currentSpeed = 0;
+			}
+			m_JoystickRightMovedOnce = true;
 			m_position = m_position += sf::Vector2f(0, acceleration() * (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) / 100));
+		}
+		else
+		{
+			m_JoystickRightMovedOnce = false;
 		}
 
 		if ((tempVec.x < 5) && (tempVec.x > -5) &&

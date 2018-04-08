@@ -23,11 +23,11 @@ private:
 	 std::vector<int> m_row6 = { 1,0,0,1,0,0,0,0,1,0,0,1,0,0,1 };
 	 std::vector<int> m_row7 = { 1,0,0,1,0,0,2,0,1,0,0,1,0,0,1 };
 	 std::vector<int> m_row8 = { 1,0,0,1,0,0,0,0,1,0,1,1,0,0,1 };
-	 std::vector<int> m_row9 = { 1,0,0,0,0,0,0,0,1,0,0,1,0,0,1 };
-	std::vector<int> m_row10 = { 1,0,0,0,0,0,0,0,1,0,0,1,0,0,1 };
-	std::vector<int> m_row11 = { 1,0,0,1,1,1,1,1,1,1,1,1,1,1,1 };
-	std::vector<int> m_row12 = { 1,2,0,0,0,0,0,0,0,0,1,0,0,0,1 };
-	std::vector<int> m_row13 = { 1,0,0,0,0,0,0,0,0,2,1,0,0,0,1 };
+	 std::vector<int> m_row9 = { 1,0,0,0,0,0,0,0,1,0,0,0,0,0,1 };
+	std::vector<int> m_row10 = { 1,0,0,0,0,0,0,0,1,0,0,0,0,0,1 };
+	std::vector<int> m_row11 = { 1,0,0,1,1,1,1,1,1,0,0,0,1,1,1 };
+	std::vector<int> m_row12 = { 1,2,0,0,0,0,0,0,0,0,0,0,0,0,1 };
+	std::vector<int> m_row13 = { 1,0,0,0,0,0,0,0,0,2,0,0,0,0,1 };
 	std::vector<int> m_row14 = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
 
 	std::vector<std::vector<int>> m_rows;

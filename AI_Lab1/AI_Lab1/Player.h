@@ -182,4 +182,7 @@ private:
 	bool m_KeyboardPressOnceA = false;
 	bool m_KeyboardPressOnceS = false;
 	bool m_KeyboardPressOnceD = false;
+
+	bool m_JoystickLeftMovedOnce = false;
+	bool m_JoystickRightMovedOnce = false;
 };
