@@ -1,0 +1,24 @@
+Controller; Strawman
+Time Taken: 52 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 40.
+Times Died: 0.
+Remaining Health: 50.
+Total Distance Traveled: 2351.
+
+Controller; Simulation
+Time Taken: 54 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 55.
+Times Died: 0.
+Remaining Health: 70.
+Total Distance Traveled: 2163.
+
+Controller; Arcade
+Time Taken: 48 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 53.
+Times Died: 0.
+Remaining Health: 80.
+Total Distance Traveled: 1930.
+

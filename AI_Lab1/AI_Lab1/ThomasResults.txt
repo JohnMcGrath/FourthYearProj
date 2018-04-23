@@ -1,0 +1,16 @@
+Controller; Arcade
+Time Taken: 66 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 47.
+Times Died: 0.
+Remaining Health: 60.
+Total Distance Traveled: 3248.
+
+Controller; Simulation
+Time Taken: 90 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 43.
+Times Died: 0.
+Remaining Health: 10.
+Total Distance Traveled: 4944.
+

@@ -29,7 +29,7 @@ float Player::acceleration()
 {
 	if (m_gameMode == GameMode::Arcade)
 	{
-		if (m_currentSpeed <= m_maxSpeed)
+		if (m_currentSpeed < m_maxSpeed)
 		{
 			m_acceleration = 1.2;
 
@@ -38,13 +38,18 @@ float Player::acceleration()
 				m_currentSpeed = 0.4f;
 			}
 			m_currentSpeed *= m_acceleration;
+
+			if (m_currentSpeed > m_maxSpeed)
+			{
+				m_currentSpeed = m_maxSpeed;
+			}
 			std::cout << "Speed: " << m_currentSpeed << std::endl;
 		}
 	}
 		
 	else if (m_gameMode == GameMode::Simulation)
 	{
-		if (m_currentSpeed <= m_maxSpeed)
+		if (m_currentSpeed < m_maxSpeed)
 		{
 			m_acceleration = 0.1f;
 			if (m_currentSpeed == 0)
@@ -52,6 +57,11 @@ float Player::acceleration()
 				m_currentSpeed = 0.2f;
 			}
 			m_currentSpeed += m_acceleration;
+
+			if (m_currentSpeed > m_maxSpeed)
+			{
+				m_currentSpeed = m_maxSpeed;
+			}
 			std::cout << "Speed: " << m_currentSpeed << std::endl;
 		}
 	}
@@ -59,6 +69,7 @@ float Player::acceleration()
 	else
 	{
 		m_currentSpeed = m_maxSpeed;
+		std::cout << "Speed: " << m_currentSpeed << std::endl;
 		return m_maxSpeed;
 	}
 
@@ -75,6 +86,7 @@ void Player::HandleInput(int controlMode)
 	float x = sin(getOrientation());
 	float y = -cos(getOrientation());
 
+	//Mouse&Keyboard
 	if (controlMode == 0)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -183,6 +195,7 @@ void Player::HandleInput(int controlMode)
 		}
 	}
 
+	//Controller
 	if (controlMode == 1)
 	{
 		tempVec.x = sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
@@ -224,6 +237,7 @@ void Player::HandleInput(int controlMode)
 		}
 	}
 
+	//TouchScreen
 	if (controlMode == 2)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))

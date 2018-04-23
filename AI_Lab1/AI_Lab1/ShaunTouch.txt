@@ -1,0 +1,16 @@
+TouchScreen; Arcade
+Time Taken: 89 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 57.
+Times Died: 0.
+Remaining Health: 30.
+Total Distance Traveled: 2514.
+
+TouchScreen; Strawman
+Time Taken: 95 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 73.
+Times Died: 0.
+Remaining Health: 40.
+Total Distance Traveled: 2492.
+

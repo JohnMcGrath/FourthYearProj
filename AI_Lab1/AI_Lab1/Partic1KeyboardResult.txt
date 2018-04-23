@@ -1,0 +1,24 @@
+Keyboard; Strawman
+Time Taken: 107 seconds.
+Total Shots Hit: 41.
+Total Shots Fired: 87.
+Times Died: 1.
+Remaining Health: 50.
+Total Distance Traveled: 4040.
+
+Keyboard; Arcade
+Time Taken: 62 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 40.
+Times Died: 0.
+Remaining Health: 50.
+Total Distance Traveled: 2070.
+
+Keyboard; Simulation
+Time Taken: 86 seconds.
+Total Shots Hit: 28.
+Total Shots Fired: 44.
+Times Died: 0.
+Remaining Health: 75.
+Total Distance Traveled: 3117.
+

@@ -155,7 +155,7 @@ void Game::EnemyHandler()
 					//Reduce Health by 10
 					m_player->setInvincible(true);
 					m_player->invinTimer = 0;
-					m_player->reduceHealth(25);
+					m_player->reduceHealth(10);
 					if (m_player->getHealth() <= 0)
 					{
 						m_fileWriter->incrimentTimesOfDeath();
@@ -171,7 +171,7 @@ void Game::EnemyHandler()
 		m_player->getSprite().setColor(sf::Color::Black);
 		m_player->invinTimer++;
 	}
-	if (m_player->invinTimer >= 100)
+	if (m_player->invinTimer >= 90)
 	{
 		m_player->setInvincible(false);
 	}
@@ -189,48 +189,6 @@ void Game::WorkerHandler()
 
 	for (size_t h = 0; h < m_mapLoader->getWallSprites().size(); h++)
 	{
-		/*
-		for (size_t k = 0; k < enemies.size(); k++)
-		{
-			//Same variables are reused
-			workerBound = enemies[k].getSprite().getGlobalBounds();
-			workerBoundShape.setSize(sf::Vector2f(workerBound.width, workerBound.height));
-			workerBoundShape.setPosition(sf::Vector2f(workerBound.left, workerBound.top));
-
-			if (m_player->Magnitude(workerBoundShape.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 200)
-			{
-				if (workerBoundShape.getGlobalBounds().intersects(m_mapLoader->getWallSprites().at(h).getGlobalBounds()))
-				{
-					sf::Vector2f tempPlayerPos = enemies[k].getPosition();
-					sf::Vector2f tempSpritePos = m_mapLoader->getWallSprites().at(h).getPosition();
-
-					if (tempPlayerPos.y < tempSpritePos.y)
-					{
-						enemies[k].setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y -= 2));
-					}
-
-					else if (tempPlayerPos.y > tempSpritePos.y)
-					{
-						enemies[k].setPosition(sf::Vector2f(tempPlayerPos.x, tempPlayerPos.y += 2));
-					}
-
-					if (tempPlayerPos.x < tempSpritePos.x)
-					{
-						enemies[k].setPosition(sf::Vector2f(tempPlayerPos.x -= 2, tempPlayerPos.y));
-					}
-
-					else if (tempPlayerPos.y > tempSpritePos.y)
-					{
-						enemies[k].setPosition(sf::Vector2f(tempPlayerPos.x += 2, tempPlayerPos.y));
-					}
-
-					std::cout << "Enemy Wall Hit" << std::endl;
-				}
-			}
-		}
-		*/
-
-
 		//Only check walls within a distance of 200 pixels
 		if (m_player->Magnitude(playerBoundShap.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 200)
 		{
@@ -458,20 +416,6 @@ void Game::BulletHandler()
 			bulletBound = bullets[i].m_shape.getGlobalBounds();
 			bulletBoundShape.setSize(sf::Vector2f(bulletBound.width, bulletBound.height));
 			bulletBoundShape.setPosition(sf::Vector2f(bulletBound.left, bulletBound.top));
-
-			//////CAUSES LAG IF BULLET GOES OFF SCREEN
-			//for (size_t h = 0; h < m_mapLoader->getWallSprites().size(); h++)
-			//{
-			//	if (m_player->Magnitude(bullets[i].m_shape.getPosition() - m_mapLoader->getWallSprites().at(h).getPosition()) < 20)
-			//	{
-			//		////If bullet hits wall
-			//		if (bulletBoundShape.getGlobalBounds().intersects(m_mapLoader->getWallSprites().at(h).getGlobalBounds()))
-			//		{
-			//			bullets.erase(bullets.begin() + i);
-			//			//break;
-			//		}
-			//	}
-			//}
 
 			for (size_t k = 0; k < enemies.size(); k++)
 			{
